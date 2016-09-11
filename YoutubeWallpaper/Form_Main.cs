@@ -320,7 +320,7 @@ namespace YoutubeWallpaper
 
         private void ToolStripMenuItem_openBlog_Click(object sender, EventArgs e)
         {
-            System.Diagnostics.Process.Start(@"http://blog.naver.com/neurowhai");
+            System.Diagnostics.Process.Start(@"http://blog.naver.com/neurowhai/220810470139");
         }
 
         //#########################################################################################################
