@@ -7,20 +7,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Runtime.InteropServices;
 
 namespace YoutubeWallpaper
 {
     public partial class Form_Wallpaper : Form
     {
-        [DllImport("winmm.dll")]
-        public static extern int waveOutGetVolume(IntPtr p, out uint volume);
-
-        [DllImport("winmm.dll")]
-        public static extern int waveOutSetVolume(IntPtr p, uint volume);
-
-        //#############################################################################################
-
         public Form_Wallpaper()
         {
             InitializeComponent();
@@ -43,14 +34,21 @@ namespace YoutubeWallpaper
             get
             {
                 uint temp = 0;
-                waveOutGetVolume(IntPtr.Zero, out temp);
+                WinApi.waveOutGetVolume(IntPtr.Zero, out temp);
                 return (int)((double)(temp & 0xFFFF) * 100 / 0xFFFF);
             }
             set
             {
                 uint vol = (uint)((double)0xFFFF * value / 100) & 0xFFFF;
-                waveOutSetVolume(IntPtr.Zero, (vol << 16) | vol);
+                WinApi.waveOutSetVolume(IntPtr.Zero, (vol << 16) | vol);
             }
+        }
+
+        //#############################################################################################
+
+        public void PerformClickWallpaper(int x, int y)
+        {
+            // TODO: 
         }
 
         //#############################################################################################
