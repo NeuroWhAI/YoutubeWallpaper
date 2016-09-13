@@ -56,6 +56,12 @@
     <Compile Include="Form_Main.Designer.cs">
       <DependentUpon>Form_Main.cs</DependentUpon>
     </Compile>
+    <Compile Include="Form_Touchpad.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_Touchpad.Designer.cs">
+      <DependentUpon>Form_Touchpad.cs</DependentUpon>
+    </Compile>
     <Compile Include="Form_Wallpaper.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -65,9 +71,13 @@
     <Compile Include="Option.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ScreenUtility.cs" />
     <Compile Include="WinApi.cs" />
     <EmbeddedResource Include="Form_Main.resx">
       <DependentUpon>Form_Main.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form_Touchpad.resx">
+      <DependentUpon>Form_Touchpad.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form_Wallpaper.resx">
       <DependentUpon>Form_Wallpaper.cs</DependentUpon>

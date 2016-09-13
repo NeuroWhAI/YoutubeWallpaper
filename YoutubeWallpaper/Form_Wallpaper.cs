@@ -44,11 +44,46 @@ namespace YoutubeWallpaper
             }
         }
 
+        public Screen OwnerScreen
+        { get; set; } = Screen.PrimaryScreen;
+
         //#############################################################################################
+
+        public void ShowCursor(bool bShow)
+        {
+            this.panel_cursor.Visible = bShow;
+        }
+
+        public void MoveCursor(int x, int y)
+        {
+            this.panel_cursor.Location = new Point(x - this.panel_cursor.Width / 2,
+                y - this.panel_cursor.Height / 2);
+        }
 
         public void PerformClickWallpaper(int x, int y)
         {
-            // TODO: 
+            MoveCursor(x, y);
+
+
+            IntPtr flash;
+            flash = WinApi.FindWindowEx(this.webBrowser_page.Handle, IntPtr.Zero, "Shell Embedding", IntPtr.Zero);
+            flash = WinApi.FindWindowEx(flash, IntPtr.Zero, "Shell DocObject View", IntPtr.Zero);
+            flash = WinApi.FindWindowEx(flash, IntPtr.Zero, "Internet Explorer_Server", IntPtr.Zero);
+            flash = WinApi.FindWindowEx(flash, IntPtr.Zero, "MacromediaFlashPlayerActiveX", IntPtr.Zero);
+
+            if (flash != IntPtr.Zero)
+            {
+                Func<int, int, int> MakeParam = (high, low) =>
+                {
+                    return ((high << 16) | (low & 0xFFFF));
+                };
+
+                IntPtr result = IntPtr.Zero;
+                WinApi.SendMessageTimeout(flash, 0x201/*DOWN*/, new IntPtr(0), new IntPtr(MakeParam(y, x)),
+                    WinApi.SendMessageTimeoutFlags.SMTO_NORMAL, 0, out result);
+                WinApi.SendMessageTimeout(flash, 0x202/*UP*/, new IntPtr(0), new IntPtr(MakeParam(y, x)),
+                    WinApi.SendMessageTimeoutFlags.SMTO_NORMAL, 0, out result);
+            }
         }
 
         //#############################################################################################
@@ -59,18 +94,7 @@ namespace YoutubeWallpaper
 
             if (m_isFixed)
             {
-                using (var g = this.CreateGraphics())
-                {
-                    var location = Screen.PrimaryScreen.Bounds.Location;
-                    var size = Screen.PrimaryScreen.Bounds.Size;
-
-                    PointF dpi = new PointF(96.0f / g.DpiX, 96.0f / g.DpiY);
-
-                    this.Location = new Point((int)(location.X * dpi.X),
-                        (int)(location.Y * dpi.Y));
-                    this.Size = new Size((int)(size.Width * dpi.X),
-                        (int)(size.Height * dpi.Y));
-                }
+                ScreenUtility.FillScreen(this, OwnerScreen);
             }
             else
             {

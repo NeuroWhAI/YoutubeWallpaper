@@ -28,6 +28,8 @@ namespace YoutubeWallpaper
 
         protected Form_Wallpaper m_wallpaper = null;
 
+        protected Form_Touchpad m_touchpad = null;
+
         //#########################################################################################################
 
         protected void HideController()
@@ -42,6 +44,22 @@ namespace YoutubeWallpaper
             this.notifyIcon_tray.Visible = false;
 
             this.Show();
+        }
+
+        protected void ShowTouchPad()
+        {
+            if (m_touchpad == null || m_touchpad.IsDisposed)
+            {
+                m_touchpad = new Form_Touchpad();
+                m_touchpad.Show();
+            }
+            else
+            {
+                m_touchpad.WindowState = FormWindowState.Normal;
+                m_touchpad.Focus();
+            }
+
+            m_touchpad.Target = m_wallpaper;
         }
 
         //#########################################################################################################
@@ -60,7 +78,7 @@ namespace YoutubeWallpaper
 
             url.Append(m_option.Id);
 
-            url.Append(@"&autoplay=1&loop=1&controls=0&showinfo=0");
+            url.Append(@"&autoplay=1&loop=1&controls=0&showinfo=0&autohide=1&modestbranding=1&rel=0");
 
             if (m_option.IdType == Option.Type.OneVideo)
                 url.Append(@"&version=2");
@@ -101,6 +119,11 @@ namespace YoutubeWallpaper
             m_wallpaper = new Form_Wallpaper();
             m_wallpaper.Volume = m_option.Volume;
             m_wallpaper.Show();
+
+            if (m_touchpad != null)
+            {
+                m_touchpad.Target = m_wallpaper;
+            }
 
             if (m_wallpaper.IsFixed)
             {
@@ -306,6 +329,11 @@ namespace YoutubeWallpaper
 
         //#########################################################################################################
 
+        private void ToolStripMenuItem_openTouchpad_Click(object sender, EventArgs e)
+        {
+            ShowTouchPad();
+        }
+
         private void ToolStripMenuItem_stopWallpaper_Click(object sender, EventArgs e)
         {
             StopWallpaper();
@@ -335,6 +363,11 @@ namespace YoutubeWallpaper
         private void ToolStripMenuItem_openController_Click(object sender, EventArgs e)
         {
             ShowController();
+        }
+
+        private void ToolStripMenuItem_openTouchpadInTray_Click(object sender, EventArgs e)
+        {
+            ShowTouchPad();
         }
 
         private void ToolStripMenuItem_stopWallpaperInTray_Click(object sender, EventArgs e)

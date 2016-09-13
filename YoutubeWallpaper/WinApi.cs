@@ -46,5 +46,9 @@ namespace YoutubeWallpaper
 
         [DllImport("winmm.dll")]
         public static extern int waveOutSetVolume(IntPtr p, uint volume);
+
+        [return: MarshalAs(UnmanagedType.Bool)]
+        [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
+        public static extern bool PostMessage(IntPtr hWnd, uint Msg, IntPtr wParam, IntPtr lParam);
     }
 }
