@@ -53,6 +53,7 @@
             this.panel_cursor.Name = "panel_cursor";
             this.panel_cursor.Size = new System.Drawing.Size(16, 16);
             this.panel_cursor.TabIndex = 1;
+            this.panel_cursor.Visible = false;
             // 
             // Form_Wallpaper
             // 
