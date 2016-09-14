@@ -56,7 +56,7 @@ namespace YoutubeWallpaper
             else
             {
                 m_touchpad.WindowState = FormWindowState.Normal;
-                m_touchpad.Focus();
+                m_touchpad.Activate();
             }
 
             m_touchpad.Target = m_wallpaper;

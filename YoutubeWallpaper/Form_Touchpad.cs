@@ -59,7 +59,7 @@ namespace YoutubeWallpaper
                     var cursor = CursorToTarget(e.Location);
                     m_target.PerformClickWallpaper(cursor.X, cursor.Y);
 
-                    this.Focus();
+                    this.Activate();
                 }
             }
         }

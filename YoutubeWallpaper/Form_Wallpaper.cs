@@ -45,6 +45,20 @@ namespace YoutubeWallpaper
             }
         }
 
+        protected IntPtr PlayerHandle
+        {
+            get
+            {
+                IntPtr flash = IntPtr.Zero;
+                flash = WinApi.FindWindowEx(this.webBrowser_page.Handle, IntPtr.Zero, "Shell Embedding", IntPtr.Zero);
+                flash = WinApi.FindWindowEx(flash, IntPtr.Zero, "Shell DocObject View", IntPtr.Zero);
+                flash = WinApi.FindWindowEx(flash, IntPtr.Zero, "Internet Explorer_Server", IntPtr.Zero);
+                flash = WinApi.FindWindowEx(flash, IntPtr.Zero, "MacromediaFlashPlayerActiveX", IntPtr.Zero);
+
+                return flash;
+            }
+        }
+
         public Screen OwnerScreen
         { get; set; } = Screen.PrimaryScreen;
 
@@ -70,15 +84,7 @@ namespace YoutubeWallpaper
 
         public void PerformClickWallpaper(int x, int y)
         {
-            MoveCursor(x, y);
-
-
-            IntPtr flash;
-            flash = WinApi.FindWindowEx(this.webBrowser_page.Handle, IntPtr.Zero, "Shell Embedding", IntPtr.Zero);
-            flash = WinApi.FindWindowEx(flash, IntPtr.Zero, "Shell DocObject View", IntPtr.Zero);
-            flash = WinApi.FindWindowEx(flash, IntPtr.Zero, "Internet Explorer_Server", IntPtr.Zero);
-            flash = WinApi.FindWindowEx(flash, IntPtr.Zero, "MacromediaFlashPlayerActiveX", IntPtr.Zero);
-
+            var flash = this.PlayerHandle;
             if (flash != IntPtr.Zero)
             {
                 IntPtr result = IntPtr.Zero;
