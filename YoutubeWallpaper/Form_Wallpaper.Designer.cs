@@ -28,9 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form_Wallpaper));
             this.webBrowser_page = new System.Windows.Forms.WebBrowser();
             this.panel_cursor = new System.Windows.Forms.Panel();
+            this.timer_check = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
             // webBrowser_page
@@ -55,6 +57,11 @@
             this.panel_cursor.TabIndex = 1;
             this.panel_cursor.Visible = false;
             // 
+            // timer_check
+            // 
+            this.timer_check.Interval = 1000;
+            this.timer_check.Tick += new System.EventHandler(this.timer_check_Tick);
+            // 
             // Form_Wallpaper
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
@@ -69,6 +76,7 @@
             this.Name = "Form_Wallpaper";
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "Wallpaper";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form_Wallpaper_FormClosing);
             this.Load += new System.EventHandler(this.Form_Wallpaper_Load);
             this.ResumeLayout(false);
 
@@ -78,5 +86,6 @@
 
         private System.Windows.Forms.WebBrowser webBrowser_page;
         private System.Windows.Forms.Panel panel_cursor;
+        private System.Windows.Forms.Timer timer_check;
     }
 }

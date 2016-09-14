@@ -21,6 +21,11 @@ namespace YoutubeWallpaper
 
         public delegate bool EnumWindowsProc(IntPtr hwnd, IntPtr lParam);
 
+        public static int MakeParam(int high, int low)
+        {
+            return ((high << 16) | (low & 0xFFFF));
+        }
+
         [DllImport("user32.dll", SetLastError = true)]
         public static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
 
@@ -50,5 +55,12 @@ namespace YoutubeWallpaper
         [return: MarshalAs(UnmanagedType.Bool)]
         [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
         public static extern bool PostMessage(IntPtr hWnd, uint Msg, IntPtr wParam, IntPtr lParam);
+
+        [DllImport("user32.dll", ExactSpelling = true, CharSet = CharSet.Auto)]
+        public static extern IntPtr GetParent(IntPtr hWnd);
+
+        [DllImport("user32.dll")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static extern bool EnumChildWindows(IntPtr hwndParent, EnumWindowsProc lpEnumFunc, IntPtr lParam);
     }
 }

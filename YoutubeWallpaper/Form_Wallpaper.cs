@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace YoutubeWallpaper
@@ -47,6 +48,13 @@ namespace YoutubeWallpaper
         public Screen OwnerScreen
         { get; set; } = Screen.PrimaryScreen;
 
+        protected Task m_checkParent = null;
+        protected bool m_onRunning = false;
+        protected EventWaitHandle m_waitHandle = null;
+
+        protected readonly object m_lockFlag = new object();
+        protected bool m_needUpdateParent = false;
+
         //#############################################################################################
 
         public void ShowCursor(bool bShow)
@@ -73,22 +81,15 @@ namespace YoutubeWallpaper
 
             if (flash != IntPtr.Zero)
             {
-                Func<int, int, int> MakeParam = (high, low) =>
-                {
-                    return ((high << 16) | (low & 0xFFFF));
-                };
-
                 IntPtr result = IntPtr.Zero;
-                WinApi.SendMessageTimeout(flash, 0x201/*DOWN*/, new IntPtr(0), new IntPtr(MakeParam(y, x)),
+                WinApi.SendMessageTimeout(flash, 0x201/*DOWN*/, new IntPtr(0), new IntPtr(WinApi.MakeParam(y, x)),
                     WinApi.SendMessageTimeoutFlags.SMTO_NORMAL, 0, out result);
-                WinApi.SendMessageTimeout(flash, 0x202/*UP*/, new IntPtr(0), new IntPtr(MakeParam(y, x)),
+                WinApi.SendMessageTimeout(flash, 0x202/*UP*/, new IntPtr(0), new IntPtr(WinApi.MakeParam(y, x)),
                     WinApi.SendMessageTimeoutFlags.SMTO_NORMAL, 0, out result);
             }
         }
 
-        //#############################################################################################
-
-        private void Form_Wallpaper_Load(object sender, EventArgs e)
+        protected bool PinToBackground()
         {
             m_isFixed = BehindDesktopIcon.FixBehindDesktopIcon(this.Handle);
 
@@ -96,9 +97,93 @@ namespace YoutubeWallpaper
             {
                 ScreenUtility.FillScreen(this, OwnerScreen);
             }
+
+
+            return m_isFixed;
+        }
+
+        protected void CheckParent(object thisHandle)
+        {
+            IntPtr me = (IntPtr)thisHandle;
+
+
+            while (m_onRunning)
+            {
+                bool isChildOfProgman = false;
+
+
+                var progman = WinApi.FindWindow("Progman", null);
+
+                WinApi.EnumChildWindows(progman, new WinApi.EnumWindowsProc((handle, lparam) =>
+                {
+                    if (handle == me)
+                    {
+                        isChildOfProgman = true;
+                        return false;
+                    }
+
+                    return true;
+                }), IntPtr.Zero);
+
+
+                if (isChildOfProgman == false)
+                {
+                    lock (m_lockFlag)
+                    {
+                        m_needUpdateParent = true;
+                    }
+                }
+
+
+                m_waitHandle.WaitOne(2000);
+            }
+        }
+
+        //#############################################################################################
+
+        private void Form_Wallpaper_Load(object sender, EventArgs e)
+        {
+            if (PinToBackground())
+            {
+                m_waitHandle = new EventWaitHandle(false, EventResetMode.ManualReset);
+                m_onRunning = true;
+                m_checkParent = Task.Factory.StartNew(CheckParent, this.Handle);
+
+                this.timer_check.Start();
+            }
             else
             {
                 this.Close();
+            }
+        }
+
+        private void Form_Wallpaper_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            this.timer_check.Stop();
+
+            if (m_checkParent != null)
+            {
+                m_onRunning = false;
+                m_waitHandle.Set();
+                m_checkParent.Wait(TimeSpan.FromSeconds(10.0));
+                m_checkParent = null;
+
+                m_waitHandle.Dispose();
+            }
+        }
+
+        private void timer_check_Tick(object sender, EventArgs e)
+        {
+            bool needUpdate = false;
+            lock (m_lockFlag)
+            {
+                needUpdate = m_needUpdateParent;
+                m_needUpdateParent = false;
+            }
+
+            if (needUpdate)
+            {
+                PinToBackground();
             }
         }
     }
