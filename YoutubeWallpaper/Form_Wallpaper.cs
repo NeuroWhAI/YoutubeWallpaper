@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
 using System.Windows.Forms;
+using Microsoft.Win32;
 
 namespace YoutubeWallpaper
 {
@@ -67,7 +68,7 @@ namespace YoutubeWallpaper
         protected EventWaitHandle m_waitHandle = null;
 
         protected readonly object m_lockFlag = new object();
-        protected bool m_needUpdateParent = false;
+        protected bool m_needUpdate = false;
 
         //#############################################################################################
 
@@ -136,7 +137,7 @@ namespace YoutubeWallpaper
                 {
                     lock (m_lockFlag)
                     {
-                        m_needUpdateParent = true;
+                        m_needUpdate = true;
                     }
                 }
 
@@ -147,13 +148,25 @@ namespace YoutubeWallpaper
 
         //#############################################################################################
 
+        private void SystemEvents_DisplaySettingsChanged(object sender, EventArgs e)
+        {
+            lock (m_lockFlag)
+            {
+                m_needUpdate = true;
+            }
+        }
+
         private void Form_Wallpaper_Load(object sender, EventArgs e)
         {
+            SystemEvents.DisplaySettingsChanged += SystemEvents_DisplaySettingsChanged;
+
+
             if (PinToBackground())
             {
                 m_waitHandle = new EventWaitHandle(false, EventResetMode.ManualReset);
                 m_onRunning = true;
                 m_checkParent = Task.Factory.StartNew(CheckParent, this.Handle);
+
 
                 this.timer_check.Start();
             }
@@ -165,7 +178,11 @@ namespace YoutubeWallpaper
 
         private void Form_Wallpaper_FormClosing(object sender, FormClosingEventArgs e)
         {
+            SystemEvents.DisplaySettingsChanged -= SystemEvents_DisplaySettingsChanged;
+
+
             this.timer_check.Stop();
+
 
             if (m_checkParent != null)
             {
@@ -183,8 +200,8 @@ namespace YoutubeWallpaper
             bool needUpdate = false;
             lock (m_lockFlag)
             {
-                needUpdate = m_needUpdateParent;
-                m_needUpdateParent = false;
+                needUpdate = m_needUpdate;
+                m_needUpdate = false;
             }
 
             if (needUpdate)

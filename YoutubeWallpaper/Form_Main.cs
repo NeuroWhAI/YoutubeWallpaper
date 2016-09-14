@@ -287,7 +287,7 @@ namespace YoutubeWallpaper
 
 
             StopWallpaper();
-            
+
 
             PlayWallpaper();
         }

@@ -51,6 +51,7 @@
             this.ToolStripMenuItem_hideController = new System.Windows.Forms.ToolStripMenuItem();
             this.ToolStripMenuItem_exit = new System.Windows.Forms.ToolStripMenuItem();
             this.wallpaperToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ToolStripMenuItem_openTouchpad = new System.Windows.Forms.ToolStripMenuItem();
             this.ToolStripMenuItem_stopWallpaper = new System.Windows.Forms.ToolStripMenuItem();
             this.ToolStripMenuItem_mute = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -58,13 +59,12 @@
             this.notifyIcon_tray = new System.Windows.Forms.NotifyIcon(this.components);
             this.contextMenuStrip_tray = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.ToolStripMenuItem_openController = new System.Windows.Forms.ToolStripMenuItem();
+            this.ToolStripMenuItem_openTouchpadInTray = new System.Windows.Forms.ToolStripMenuItem();
             this.ToolStripMenuItem_stopWallpaperInTray = new System.Windows.Forms.ToolStripMenuItem();
             this.ToolStripMenuItem_muteInTray = new System.Windows.Forms.ToolStripMenuItem();
             this.ToolStripMenuItem_exitInTray = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.trackBar_volume = new System.Windows.Forms.TrackBar();
-            this.ToolStripMenuItem_openTouchpad = new System.Windows.Forms.ToolStripMenuItem();
-            this.ToolStripMenuItem_openTouchpadInTray = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -290,6 +290,13 @@
             this.wallpaperToolStripMenuItem.Size = new System.Drawing.Size(90, 24);
             this.wallpaperToolStripMenuItem.Text = "Wallpaper";
             // 
+            // ToolStripMenuItem_openTouchpad
+            // 
+            this.ToolStripMenuItem_openTouchpad.Name = "ToolStripMenuItem_openTouchpad";
+            this.ToolStripMenuItem_openTouchpad.Size = new System.Drawing.Size(192, 26);
+            this.ToolStripMenuItem_openTouchpad.Text = "Open touchpad";
+            this.ToolStripMenuItem_openTouchpad.Click += new System.EventHandler(this.ToolStripMenuItem_openTouchpad_Click);
+            // 
             // ToolStripMenuItem_stopWallpaper
             // 
             this.ToolStripMenuItem_stopWallpaper.Name = "ToolStripMenuItem_stopWallpaper";
@@ -336,7 +343,7 @@
             this.ToolStripMenuItem_muteInTray,
             this.ToolStripMenuItem_exitInTray});
             this.contextMenuStrip_tray.Name = "contextMenuStrip_tray";
-            this.contextMenuStrip_tray.Size = new System.Drawing.Size(193, 162);
+            this.contextMenuStrip_tray.Size = new System.Drawing.Size(193, 134);
             // 
             // ToolStripMenuItem_openController
             // 
@@ -344,6 +351,13 @@
             this.ToolStripMenuItem_openController.Size = new System.Drawing.Size(192, 26);
             this.ToolStripMenuItem_openController.Text = "Open";
             this.ToolStripMenuItem_openController.Click += new System.EventHandler(this.ToolStripMenuItem_openController_Click);
+            // 
+            // ToolStripMenuItem_openTouchpadInTray
+            // 
+            this.ToolStripMenuItem_openTouchpadInTray.Name = "ToolStripMenuItem_openTouchpadInTray";
+            this.ToolStripMenuItem_openTouchpadInTray.Size = new System.Drawing.Size(192, 26);
+            this.ToolStripMenuItem_openTouchpadInTray.Text = "Open touchpad";
+            this.ToolStripMenuItem_openTouchpadInTray.Click += new System.EventHandler(this.ToolStripMenuItem_openTouchpadInTray_Click);
             // 
             // ToolStripMenuItem_stopWallpaperInTray
             // 
@@ -385,20 +399,6 @@
             this.trackBar_volume.Size = new System.Drawing.Size(299, 56);
             this.trackBar_volume.TabIndex = 0;
             this.trackBar_volume.Scroll += new System.EventHandler(this.trackBar_volume_Scroll);
-            // 
-            // ToolStripMenuItem_openTouchpad
-            // 
-            this.ToolStripMenuItem_openTouchpad.Name = "ToolStripMenuItem_openTouchpad";
-            this.ToolStripMenuItem_openTouchpad.Size = new System.Drawing.Size(192, 26);
-            this.ToolStripMenuItem_openTouchpad.Text = "Open touchpad";
-            this.ToolStripMenuItem_openTouchpad.Click += new System.EventHandler(this.ToolStripMenuItem_openTouchpad_Click);
-            // 
-            // ToolStripMenuItem_openTouchpadInTray
-            // 
-            this.ToolStripMenuItem_openTouchpadInTray.Name = "ToolStripMenuItem_openTouchpadInTray";
-            this.ToolStripMenuItem_openTouchpadInTray.Size = new System.Drawing.Size(192, 26);
-            this.ToolStripMenuItem_openTouchpadInTray.Text = "Open touchpad";
-            this.ToolStripMenuItem_openTouchpadInTray.Click += new System.EventHandler(this.ToolStripMenuItem_openTouchpadInTray_Click);
             // 
             // Form_Main
             // 
