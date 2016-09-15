@@ -17,6 +17,9 @@ namespace YoutubeWallpaper
         public Form_Wallpaper()
         {
             InitializeComponent();
+
+
+            PinToBackground();
         }
 
         //#############################################################################################
@@ -60,8 +63,29 @@ namespace YoutubeWallpaper
             }
         }
 
+        private int m_ownerScreenIndex = 0;
+        public int OwnerScreenIndex
+        {
+            get { return m_ownerScreenIndex; }
+            set
+            {
+                if (value < 0)
+                    value = 0;
+                else if (value >= Screen.AllScreens.Length)
+                    value = 0;
+
+                m_ownerScreenIndex = value;
+            }
+        }
         public Screen OwnerScreen
-        { get; set; } = Screen.PrimaryScreen;
+        {
+            get
+            {
+                if (OwnerScreenIndex < Screen.AllScreens.Length)
+                    return Screen.AllScreens[OwnerScreenIndex];
+                return Screen.PrimaryScreen;
+            }
+        }
 
         protected Task m_checkParent = null;
         protected bool m_onRunning = false;
