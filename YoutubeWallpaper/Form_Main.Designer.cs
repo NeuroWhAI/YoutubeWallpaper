@@ -54,6 +54,7 @@
             this.ToolStripMenuItem_openTouchpad = new System.Windows.Forms.ToolStripMenuItem();
             this.ToolStripMenuItem_stopWallpaper = new System.Windows.Forms.ToolStripMenuItem();
             this.ToolStripMenuItem_mute = new System.Windows.Forms.ToolStripMenuItem();
+            this.ToolStripMenuItem_nextScreen = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ToolStripMenuItem_openBlog = new System.Windows.Forms.ToolStripMenuItem();
             this.notifyIcon_tray = new System.Windows.Forms.NotifyIcon(this.components);
@@ -285,7 +286,8 @@
             this.wallpaperToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.ToolStripMenuItem_openTouchpad,
             this.ToolStripMenuItem_stopWallpaper,
-            this.ToolStripMenuItem_mute});
+            this.ToolStripMenuItem_mute,
+            this.ToolStripMenuItem_nextScreen});
             this.wallpaperToolStripMenuItem.Name = "wallpaperToolStripMenuItem";
             this.wallpaperToolStripMenuItem.Size = new System.Drawing.Size(90, 24);
             this.wallpaperToolStripMenuItem.Text = "Wallpaper";
@@ -310,6 +312,13 @@
             this.ToolStripMenuItem_mute.Size = new System.Drawing.Size(192, 26);
             this.ToolStripMenuItem_mute.Text = "Mute";
             this.ToolStripMenuItem_mute.Click += new System.EventHandler(this.ToolStripMenuItem_mute_Click);
+            // 
+            // ToolStripMenuItem_nextScreen
+            // 
+            this.ToolStripMenuItem_nextScreen.Name = "ToolStripMenuItem_nextScreen";
+            this.ToolStripMenuItem_nextScreen.Size = new System.Drawing.Size(192, 26);
+            this.ToolStripMenuItem_nextScreen.Text = "Next screen";
+            this.ToolStripMenuItem_nextScreen.Click += new System.EventHandler(this.ToolStripMenuItem_nextScreen_Click);
             // 
             // helpToolStripMenuItem
             // 
@@ -475,6 +484,7 @@
         private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem_muteInTray;
         private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem_openTouchpad;
         private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem_openTouchpadInTray;
+        private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem_nextScreen;
     }
 }
 

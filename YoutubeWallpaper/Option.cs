@@ -39,6 +39,9 @@ namespace YoutubeWallpaper
         public int Volume
         { get; set; } = 100;
 
+        public int ScreenIndex
+        { get; set; } = 0;
+
         //#############################################################################################
 
         public void SaveToFile(string filename)
@@ -49,6 +52,7 @@ namespace YoutubeWallpaper
                 bw.Write(Id);
                 bw.Write((int)VideoQuality);
                 bw.Write(Volume);
+                bw.Write(ScreenIndex);
 
 
                 bw.Close();
@@ -59,13 +63,22 @@ namespace YoutubeWallpaper
         {
             using (BinaryReader br = new BinaryReader(new FileStream(filename, FileMode.Open)))
             {
-                IdType = (Type)br.ReadInt32();
-                Id = br.ReadString();
-                VideoQuality = (Quality)br.ReadInt32();
-                Volume = br.ReadInt32();
-
-
-                br.Close();
+                try
+                {
+                    IdType = (Type)br.ReadInt32();
+                    Id = br.ReadString();
+                    VideoQuality = (Quality)br.ReadInt32();
+                    Volume = br.ReadInt32();
+                    ScreenIndex = br.ReadInt32();
+                }
+                catch (EndOfStreamException)
+                {
+                    // NOTE: 파일이 구버전용임.
+                }
+                finally
+                {
+                    br.Close();
+                }
             }
         }
     }

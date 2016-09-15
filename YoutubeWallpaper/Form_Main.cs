@@ -116,7 +116,7 @@ namespace YoutubeWallpaper
             url.Append(quality);
 
 
-            m_wallpaper = new Form_Wallpaper();
+            m_wallpaper = new Form_Wallpaper(m_option.ScreenIndex);
             m_wallpaper.Volume = m_option.Volume;
             m_wallpaper.Show();
 
@@ -154,6 +154,24 @@ namespace YoutubeWallpaper
             {
                 m_wallpaper.Volume = 0;
                 this.trackBar_volume.Value = 0;
+            }
+        }
+
+        protected void NextScreen()
+        {
+            if (m_wallpaper != null)
+            {
+                m_wallpaper.OwnerScreenIndex++;
+                m_option.ScreenIndex = m_wallpaper.OwnerScreenIndex;
+
+                if (m_wallpaper.IsFixed == false)
+                {
+                    MessageBox.Show("배경화면을 설정할 수 없습니다.", "Error!",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+
+                    StopWallpaper();
+                }
             }
         }
 
@@ -342,6 +360,11 @@ namespace YoutubeWallpaper
         private void ToolStripMenuItem_mute_Click(object sender, EventArgs e)
         {
             MuteWallpaper();
+        }
+
+        private void ToolStripMenuItem_nextScreen_Click(object sender, EventArgs e)
+        {
+            NextScreen();
         }
 
         //#########################################################################################################

@@ -14,9 +14,12 @@ namespace YoutubeWallpaper
 {
     public partial class Form_Wallpaper : Form
     {
-        public Form_Wallpaper()
+        public Form_Wallpaper(int ownerScreenIndex = 0)
         {
             InitializeComponent();
+
+
+            OwnerScreenIndex = ownerScreenIndex;
 
 
             PinToBackground();
@@ -74,7 +77,12 @@ namespace YoutubeWallpaper
                 else if (value >= Screen.AllScreens.Length)
                     value = 0;
 
-                m_ownerScreenIndex = value;
+                if (m_ownerScreenIndex != value)
+                {
+                    m_ownerScreenIndex = value;
+                    
+                    PinToBackground();
+                }
             }
         }
         public Screen OwnerScreen
