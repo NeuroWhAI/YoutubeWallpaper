@@ -13,6 +13,10 @@ namespace YoutubeWallpaper
             IntPtr progman = WinApi.FindWindow("Progman", null);
 
 
+            if (progman == IntPtr.Zero)
+                return false;
+
+
             IntPtr result = IntPtr.Zero;
             WinApi.SendMessageTimeout(progman,
                 0x052C,
@@ -47,12 +51,13 @@ namespace YoutubeWallpaper
             if (workerw != IntPtr.Zero)
             {
                 WinApi.ShowWindow(workerw, 0/*HIDE*/);
-
-                WinApi.SetParent(formHandle, progman);
             }
 
+            
+            WinApi.SetParent(formHandle, progman);
 
-            return workerw != IntPtr.Zero;
+
+            return true;
         }
     }
 }

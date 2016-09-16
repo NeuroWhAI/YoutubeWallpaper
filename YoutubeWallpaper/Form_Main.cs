@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
 using Microsoft.Win32;
+using System.Net;
+using System.Diagnostics;
 
 namespace YoutubeWallpaper
 {
@@ -29,6 +31,65 @@ namespace YoutubeWallpaper
         protected Form_Wallpaper m_wallpaper = null;
 
         protected Form_Touchpad m_touchpad = null;
+
+        //#########################################################################################################
+
+        protected bool CheckUpdate()
+        {
+            using (var client = new WebClient())
+            {
+                try
+                {
+                    var info = client.DownloadString(@"https://raw.githubusercontent.com/NeuroWhAI/YoutubeWallpaper/master/YoutubeWallpaper/Properties/AssemblyInfo.cs");
+
+                    int begin = info.LastIndexOf("AssemblyVersion");
+                    if (begin >= 0)
+                    {
+                        begin = info.IndexOf('\"', begin) + 1;
+                        int end = info.IndexOf('\"', begin);
+
+                        string version = info.Substring(begin, end - begin);
+
+                        if (Version.Parse(version) > Version.Parse(Application.ProductVersion))
+                        {
+                            string message = $@"새로운 버전이 확인되었습니다!
+종료하고 다운로드 페이지를 여시겠습니까?
+최신 버전 : {version}
+현재 버전 : {Application.ProductVersion}";
+
+                            if (MessageBox.Show(message, "Update",
+                                MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
+                            {
+                                Process.Start(@"http://blog.naver.com/neurowhai/220810470139");
+
+
+                                Application.Exit();
+
+
+                                return true;
+                            }
+                        }
+                    }
+                }
+                catch (WebException)
+                {
+                    MessageBox.Show("업데이트 확인에 실패하였습니다.\n인터넷 연결을 확인하세요.", "Warning!",
+                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+                catch (Exception)
+                {
+#if DEBUG
+                    throw;
+#else
+                    MessageBox.Show("알 수 없는 이유로 업데이트 확인에 실패하였습니다.", "Warning!",
+                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
+#endif
+                }
+            }
+
+
+            return false;
+        }
 
         //#########################################################################################################
 
@@ -266,6 +327,9 @@ namespace YoutubeWallpaper
 
         private void Form_Main_Load(object sender, EventArgs e)
         {
+            Task.Factory.StartNew(CheckUpdate);
+
+
             LoadOption();
 
 
@@ -371,7 +435,7 @@ namespace YoutubeWallpaper
 
         private void ToolStripMenuItem_openBlog_Click(object sender, EventArgs e)
         {
-            System.Diagnostics.Process.Start(@"http://blog.naver.com/neurowhai/220810470139");
+            Process.Start(@"http://blog.naver.com/neurowhai/220810470139");
         }
 
         //#########################################################################################################
