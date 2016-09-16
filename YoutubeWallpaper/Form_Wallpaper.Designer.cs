@@ -74,6 +74,7 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "Form_Wallpaper";
+            this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "Wallpaper";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form_Wallpaper_FormClosing);

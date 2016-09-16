@@ -42,6 +42,9 @@ namespace YoutubeWallpaper
         public int ScreenIndex
         { get; set; } = 0;
 
+        public bool IsLive
+        { get; set; } = false;
+
         //#############################################################################################
 
         public void SaveToFile(string filename)
@@ -53,6 +56,7 @@ namespace YoutubeWallpaper
                 bw.Write((int)VideoQuality);
                 bw.Write(Volume);
                 bw.Write(ScreenIndex);
+                bw.Write(IsLive);
 
 
                 bw.Close();
@@ -70,6 +74,7 @@ namespace YoutubeWallpaper
                     VideoQuality = (Quality)br.ReadInt32();
                     Volume = br.ReadInt32();
                     ScreenIndex = br.ReadInt32();
+                    IsLive = br.ReadBoolean();
                 }
                 catch (EndOfStreamException)
                 {

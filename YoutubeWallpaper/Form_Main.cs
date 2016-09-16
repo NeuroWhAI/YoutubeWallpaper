@@ -141,8 +141,13 @@ namespace YoutubeWallpaper
 
             url.Append(@"&autoplay=1&loop=1&controls=0&showinfo=0&autohide=1&modestbranding=1&rel=0");
 
-            if (m_option.IdType == Option.Type.OneVideo)
+            // OneVideo는 구버전 플레이어만 loop를 지원하므로 그렇게하되
+            // 실시간 동영상이면 그렇게하지 않는다.
+            if (m_option.IdType == Option.Type.OneVideo
+                && m_option.IsLive == false)
+            {
                 url.Append(@"&version=2");
+            }
 
             url.Append("&vq=");
 
@@ -283,6 +288,8 @@ namespace YoutubeWallpaper
             this.trackBar_volume.Value = m_option.Volume;
             if (m_wallpaper != null)
                 m_wallpaper.Volume = m_option.Volume;
+
+            this.checkBox_isLive.Checked = m_option.IsLive;
         }
 
         protected void LoadOption()
@@ -318,6 +325,8 @@ namespace YoutubeWallpaper
                 m_option.VideoQuality = Option.Quality.p1440;
 
             m_option.Volume = this.trackBar_volume.Value;
+
+            m_option.IsLive = this.checkBox_isLive.Checked;
 
 
             m_option.SaveToFile(OptionFile);
@@ -480,6 +489,13 @@ namespace YoutubeWallpaper
             {
                 m_wallpaper.Volume = this.trackBar_volume.Value;
             }
+        }
+
+        //#########################################################################################################
+
+        private void radioButton_type_one_CheckedChanged(object sender, EventArgs e)
+        {
+            this.checkBox_isLive.Enabled = this.radioButton_type_one.Checked;
         }
     }
 }

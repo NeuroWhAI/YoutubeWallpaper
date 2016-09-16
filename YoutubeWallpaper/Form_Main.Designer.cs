@@ -66,6 +66,7 @@
             this.ToolStripMenuItem_exitInTray = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.trackBar_volume = new System.Windows.Forms.TrackBar();
+            this.checkBox_isLive = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -77,6 +78,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.checkBox_isLive);
             this.groupBox1.Controls.Add(this.radioButton_type_list);
             this.groupBox1.Controls.Add(this.radioButton_type_one);
             this.groupBox1.Location = new System.Drawing.Point(12, 41);
@@ -107,6 +109,7 @@
             this.radioButton_type_one.TabStop = true;
             this.radioButton_type_one.Text = "One video";
             this.radioButton_type_one.UseVisualStyleBackColor = true;
+            this.radioButton_type_one.CheckedChanged += new System.EventHandler(this.radioButton_type_one_CheckedChanged);
             // 
             // groupBox2
             // 
@@ -409,6 +412,17 @@
             this.trackBar_volume.TabIndex = 0;
             this.trackBar_volume.Scroll += new System.EventHandler(this.trackBar_volume_Scroll);
             // 
+            // checkBox_isLive
+            // 
+            this.checkBox_isLive.AutoSize = true;
+            this.checkBox_isLive.Enabled = false;
+            this.checkBox_isLive.Location = new System.Drawing.Point(249, 24);
+            this.checkBox_isLive.Name = "checkBox_isLive";
+            this.checkBox_isLive.Size = new System.Drawing.Size(56, 19);
+            this.checkBox_isLive.TabIndex = 2;
+            this.checkBox_isLive.Text = "Live";
+            this.checkBox_isLive.UseVisualStyleBackColor = true;
+            // 
             // Form_Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
@@ -485,6 +499,7 @@
         private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem_openTouchpad;
         private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem_openTouchpadInTray;
         private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem_nextScreen;
+        private System.Windows.Forms.CheckBox checkBox_isLive;
     }
 }
 
