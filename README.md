@@ -2,7 +2,7 @@
 
 ![](https://raw.githubusercontent.com/NeuroWhAI/YoutubeWallpaper/master/Resources/icon.ico)
 
-Playing Youtube videos in your desktop.
+Playing Youtube videos on your desktop.
 
 [Blog with Download](http://blog.naver.com/neurowhai/220810470139)
 
