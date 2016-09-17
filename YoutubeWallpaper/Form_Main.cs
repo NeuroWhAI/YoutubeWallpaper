@@ -135,7 +135,7 @@ namespace YoutubeWallpaper
             if (m_option.IdType == Option.Type.OneVideo)
                 url.Append(@"v/");
             else if (m_option.IdType == Option.Type.Playlist)
-                url.Append(@"embed?listType=playlist&index=1&list=");
+                url.Append(@"embed?listType=playlist&index=0&list=");
 
             url.Append(m_option.Id);
 
@@ -216,10 +216,11 @@ namespace YoutubeWallpaper
 
         protected void MuteWallpaper()
         {
+            this.trackBar_volume.Value = 0;
+
             if (m_wallpaper != null)
             {
                 m_wallpaper.Volume = 0;
-                this.trackBar_volume.Value = 0;
             }
         }
 

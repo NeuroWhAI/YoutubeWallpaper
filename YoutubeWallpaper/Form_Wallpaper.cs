@@ -34,7 +34,12 @@ namespace YoutubeWallpaper
         public string Uri
         {
             get { return this.webBrowser_page.Url.ToString(); }
-            set { this.webBrowser_page.Navigate(value); }
+            set
+            {
+                this.webBrowser_page.Navigate(value);
+
+                UpdatePlayerHandle();
+            }
         }
 
         public int Volume
@@ -52,17 +57,15 @@ namespace YoutubeWallpaper
             }
         }
 
+        protected IntPtr m_playerHandle = IntPtr.Zero;
         protected IntPtr PlayerHandle
         {
             get
             {
-                IntPtr flash = IntPtr.Zero;
-                flash = WinApi.FindWindowEx(this.webBrowser_page.Handle, IntPtr.Zero, "Shell Embedding", IntPtr.Zero);
-                flash = WinApi.FindWindowEx(flash, IntPtr.Zero, "Shell DocObject View", IntPtr.Zero);
-                flash = WinApi.FindWindowEx(flash, IntPtr.Zero, "Internet Explorer_Server", IntPtr.Zero);
-                flash = WinApi.FindWindowEx(flash, IntPtr.Zero, "MacromediaFlashPlayerActiveX", IntPtr.Zero);
+                if (m_playerHandle != IntPtr.Zero)
+                    return m_playerHandle;
 
-                return flash;
+                return UpdatePlayerHandle();
             }
         }
 
@@ -104,6 +107,20 @@ namespace YoutubeWallpaper
 
         //#############################################################################################
 
+        protected IntPtr UpdatePlayerHandle()
+        {
+            IntPtr flash = IntPtr.Zero;
+            flash = WinApi.FindWindowEx(this.webBrowser_page.Handle, IntPtr.Zero, "Shell Embedding", IntPtr.Zero);
+            flash = WinApi.FindWindowEx(flash, IntPtr.Zero, "Shell DocObject View", IntPtr.Zero);
+            flash = WinApi.FindWindowEx(flash, IntPtr.Zero, "Internet Explorer_Server", IntPtr.Zero);
+            flash = WinApi.FindWindowEx(flash, IntPtr.Zero, "MacromediaFlashPlayerActiveX", IntPtr.Zero);
+
+            m_playerHandle = flash;
+
+
+            return flash;
+        }
+
         public void ShowCursor(bool bShow)
         {
             this.panel_cursor.Visible = bShow;
@@ -117,14 +134,21 @@ namespace YoutubeWallpaper
 
         public void PerformClickWallpaper(int x, int y)
         {
-            var flash = this.PlayerHandle;
+            IntPtr flash = this.PlayerHandle;
             if (flash != IntPtr.Zero)
             {
                 IntPtr result = IntPtr.Zero;
-                WinApi.SendMessageTimeout(flash, 0x201/*DOWN*/, new IntPtr(0), new IntPtr(WinApi.MakeParam(y, x)),
-                    WinApi.SendMessageTimeoutFlags.SMTO_NORMAL, 0, out result);
-                WinApi.SendMessageTimeout(flash, 0x202/*UP*/, new IntPtr(0), new IntPtr(WinApi.MakeParam(y, x)),
-                    WinApi.SendMessageTimeoutFlags.SMTO_NORMAL, 0, out result);
+
+                // 첫번째 클릭에서 포커스를 잠깐 얻고
+                // 두번째 클릭에서 실제로 클릭이 처리되게 하게끔 함.
+                // TODO: 아래 방법은 개선되어야 함.
+                for (int step = 0; step < 2; ++step)
+                {
+                    WinApi.SendMessageTimeout(flash, 0x201/*DOWN*/, new IntPtr(1), new IntPtr(WinApi.MakeParam(y, x)),
+                        WinApi.SendMessageTimeoutFlags.SMTO_NORMAL, 0, out result);
+                    WinApi.SendMessageTimeout(flash, 0x202/*UP*/, new IntPtr(1), new IntPtr(WinApi.MakeParam(y, x)),
+                        WinApi.SendMessageTimeoutFlags.SMTO_NORMAL, 0, out result);
+                }
             }
         }
 

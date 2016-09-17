@@ -53,7 +53,7 @@
             this.panel_cursor.BackColor = System.Drawing.SystemColors.Highlight;
             this.panel_cursor.Location = new System.Drawing.Point(0, 0);
             this.panel_cursor.Name = "panel_cursor";
-            this.panel_cursor.Size = new System.Drawing.Size(16, 16);
+            this.panel_cursor.Size = new System.Drawing.Size(12, 12);
             this.panel_cursor.TabIndex = 1;
             this.panel_cursor.Visible = false;
             // 

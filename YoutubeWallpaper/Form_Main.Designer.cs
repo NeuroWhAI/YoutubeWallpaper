@@ -31,6 +31,7 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form_Main));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.checkBox_isLive = new System.Windows.Forms.CheckBox();
             this.radioButton_type_list = new System.Windows.Forms.RadioButton();
             this.radioButton_type_one = new System.Windows.Forms.RadioButton();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
@@ -66,7 +67,7 @@
             this.ToolStripMenuItem_exitInTray = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.trackBar_volume = new System.Windows.Forms.TrackBar();
-            this.checkBox_isLive = new System.Windows.Forms.CheckBox();
+            this.toolTip_help = new System.Windows.Forms.ToolTip(this.components);
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -88,6 +89,18 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Type";
             // 
+            // checkBox_isLive
+            // 
+            this.checkBox_isLive.AutoSize = true;
+            this.checkBox_isLive.Enabled = false;
+            this.checkBox_isLive.Location = new System.Drawing.Point(249, 24);
+            this.checkBox_isLive.Name = "checkBox_isLive";
+            this.checkBox_isLive.Size = new System.Drawing.Size(56, 19);
+            this.checkBox_isLive.TabIndex = 2;
+            this.checkBox_isLive.Text = "Live";
+            this.toolTip_help.SetToolTip(this.checkBox_isLive, "최신 플레이어를 사용하여 실시간 영상을 지원하도록 합니다.\r\n재생목록의 경우 기본적으로 지원합니다.");
+            this.checkBox_isLive.UseVisualStyleBackColor = true;
+            // 
             // radioButton_type_list
             // 
             this.radioButton_type_list.AutoSize = true;
@@ -97,6 +110,7 @@
             this.radioButton_type_list.TabIndex = 1;
             this.radioButton_type_list.TabStop = true;
             this.radioButton_type_list.Text = "Playlist";
+            this.toolTip_help.SetToolTip(this.radioButton_type_list, "하나 이상의 영상을 가지는 재생목록.");
             this.radioButton_type_list.UseVisualStyleBackColor = true;
             // 
             // radioButton_type_one
@@ -108,6 +122,7 @@
             this.radioButton_type_one.TabIndex = 0;
             this.radioButton_type_one.TabStop = true;
             this.radioButton_type_one.Text = "One video";
+            this.toolTip_help.SetToolTip(this.radioButton_type_one, "재생목록이 아닌 하나의 영상.");
             this.radioButton_type_one.UseVisualStyleBackColor = true;
             this.radioButton_type_one.CheckedChanged += new System.EventHandler(this.radioButton_type_one_CheckedChanged);
             // 
@@ -128,6 +143,7 @@
             this.textBox_id.Name = "textBox_id";
             this.textBox_id.Size = new System.Drawing.Size(273, 25);
             this.textBox_id.TabIndex = 1;
+            this.toolTip_help.SetToolTip(this.textBox_id, "동영상이나 재생목록의 아이디.");
             // 
             // label1
             // 
@@ -152,6 +168,7 @@
             this.groupBox3.TabIndex = 2;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Quality";
+            this.toolTip_help.SetToolTip(this.groupBox3, "동영상 화질.");
             // 
             // radioButton_q_1440
             // 
@@ -226,6 +243,7 @@
             this.button_apply.Size = new System.Drawing.Size(148, 38);
             this.button_apply.TabIndex = 4;
             this.button_apply.Text = "Save and Start";
+            this.toolTip_help.SetToolTip(this.button_apply, "설정을 저장하고 플레이어를 실행시킵니다.");
             this.button_apply.UseVisualStyleBackColor = true;
             this.button_apply.Click += new System.EventHandler(this.button_apply_Click);
             // 
@@ -236,6 +254,7 @@
             this.button_restore.Size = new System.Drawing.Size(148, 38);
             this.button_restore.TabIndex = 5;
             this.button_restore.Text = "Restore option";
+            this.toolTip_help.SetToolTip(this.button_restore, "옵션을 저장하기 전으로 되돌립니다.");
             this.button_restore.UseVisualStyleBackColor = true;
             this.button_restore.Click += new System.EventHandler(this.button_restore_Click);
             // 
@@ -410,18 +429,16 @@
             this.trackBar_volume.Name = "trackBar_volume";
             this.trackBar_volume.Size = new System.Drawing.Size(299, 56);
             this.trackBar_volume.TabIndex = 0;
+            this.toolTip_help.SetToolTip(this.trackBar_volume, "오디오 볼륨 조절.");
             this.trackBar_volume.Scroll += new System.EventHandler(this.trackBar_volume_Scroll);
             // 
-            // checkBox_isLive
+            // toolTip_help
             // 
-            this.checkBox_isLive.AutoSize = true;
-            this.checkBox_isLive.Enabled = false;
-            this.checkBox_isLive.Location = new System.Drawing.Point(249, 24);
-            this.checkBox_isLive.Name = "checkBox_isLive";
-            this.checkBox_isLive.Size = new System.Drawing.Size(56, 19);
-            this.checkBox_isLive.TabIndex = 2;
-            this.checkBox_isLive.Text = "Live";
-            this.checkBox_isLive.UseVisualStyleBackColor = true;
+            this.toolTip_help.AutoPopDelay = 8000;
+            this.toolTip_help.InitialDelay = 500;
+            this.toolTip_help.ReshowDelay = 100;
+            this.toolTip_help.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info;
+            this.toolTip_help.ToolTipTitle = "Help";
             // 
             // Form_Main
             // 
@@ -500,6 +517,7 @@
         private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem_openTouchpadInTray;
         private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem_nextScreen;
         private System.Windows.Forms.CheckBox checkBox_isLive;
+        private System.Windows.Forms.ToolTip toolTip_help;
     }
 }
 

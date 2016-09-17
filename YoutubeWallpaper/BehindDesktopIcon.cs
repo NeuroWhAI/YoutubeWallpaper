@@ -23,10 +23,10 @@ namespace YoutubeWallpaper
                 new IntPtr(0),
                 IntPtr.Zero,
                 WinApi.SendMessageTimeoutFlags.SMTO_NORMAL,
-                1000,
+                10000,
                 out result);
 
-
+            
             IntPtr workerw = IntPtr.Zero;
 
             WinApi.EnumWindows(new WinApi.EnumWindowsProc((tophandle, topparamhandle) =>
@@ -46,15 +46,22 @@ namespace YoutubeWallpaper
 
                 return true;
             }), IntPtr.Zero);
-            
 
-            if (workerw != IntPtr.Zero)
+
+            WinApi.SetParent(formHandle, progman);
+
+
+            if (workerw == IntPtr.Zero)
+            {
+                // defView가 progman에 있는 상황이거나 그 외.
+
+                WinApi.SetWindowPos(formHandle, new IntPtr(1)/*HWND_BOTTOM*/, 0, 0, 0, 0,
+                    WinApi.SetWindowPosFlags.SWP_NOSIZE | WinApi.SetWindowPosFlags.SWP_NOMOVE);
+            }
+            else
             {
                 WinApi.ShowWindow(workerw, 0/*HIDE*/);
             }
-
-            
-            WinApi.SetParent(formHandle, progman);
 
 
             return true;
