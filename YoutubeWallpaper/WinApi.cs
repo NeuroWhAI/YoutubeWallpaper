@@ -39,6 +39,13 @@ namespace YoutubeWallpaper
             SWP_SHOWWINDOW = 0x0040,
         }
 
+        [Flags]
+        public enum CompositionAction : uint
+        {
+            DWM_EC_DISABLECOMPOSITION = 0,
+            DWM_EC_ENABLECOMPOSITION = 1
+        }
+
         public delegate bool EnumWindowsProc(IntPtr hwnd, IntPtr lParam);
 
         public static int MakeParam(int high, int low)
@@ -90,5 +97,37 @@ namespace YoutubeWallpaper
         [DllImport("user32.dll", SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool SetWindowPos(IntPtr hWnd, IntPtr hWndInsertAfter, int X, int Y, int cx, int cy, SetWindowPosFlags uFlags);
+
+        [DllImport("dwmapi.dll")]
+        private static extern int DwmIsCompositionEnabled(out bool enabled);
+        public static bool IsCompositionEnabled(out bool enabled)
+        {
+            try
+            {
+                return (DwmIsCompositionEnabled(out enabled) == 0);
+            }
+            catch(DllNotFoundException)
+            {
+                // Empty.
+            }
+
+
+            enabled = false;
+            return false;
+        }
+
+        [DllImport("dwmapi.dll", PreserveSig = false)]
+        private static extern void DwmEnableComposition(CompositionAction uCompositionAction);
+        public static void EnableComposition(CompositionAction uCompositionAction)
+        {
+            try
+            {
+                DwmEnableComposition(uCompositionAction);
+            }
+            catch (DllNotFoundException)
+            {
+                // Empty.
+            }
+        }
     }
 }

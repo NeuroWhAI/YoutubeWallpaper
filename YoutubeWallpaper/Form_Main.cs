@@ -32,6 +32,31 @@ namespace YoutubeWallpaper
 
         protected Form_Touchpad m_touchpad = null;
 
+        protected bool m_wasAero = true;
+
+        //#########################################################################################################
+
+        protected void ApplyAeroPeek()
+        {
+            if (WinApi.IsCompositionEnabled(out m_wasAero)
+                && m_wasAero == false)
+            {
+                WinApi.EnableComposition(WinApi.CompositionAction.DWM_EC_ENABLECOMPOSITION);
+            }
+            else
+            {
+                m_wasAero = true;
+            }
+        }
+
+        protected void RestoreAeroPeek()
+        {
+            if (m_wasAero == false)
+            {
+                WinApi.EnableComposition(WinApi.CompositionAction.DWM_EC_DISABLECOMPOSITION);
+            }
+        }
+
         //#########################################################################################################
 
         protected bool CheckUpdate()
@@ -337,6 +362,9 @@ namespace YoutubeWallpaper
 
         private void Form_Main_Load(object sender, EventArgs e)
         {
+            ApplyAeroPeek();
+
+
             Task.Factory.StartNew(CheckUpdate);
 
 
@@ -368,6 +396,9 @@ namespace YoutubeWallpaper
 
         private void Form_Main_FormClosed(object sender, FormClosedEventArgs e)
         {
+            RestoreAeroPeek();
+
+
             this.notifyIcon_tray.Visible = false;
         }
 
