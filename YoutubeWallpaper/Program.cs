@@ -33,7 +33,15 @@ namespace YoutubeWallpaper
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form_Main());
+
+            try
+            {
+                Application.Run(new Form_Main());
+            }
+            catch (Exception exp)
+            {
+                MessageBox.Show(exp.Message, "Unhandled Exception", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }

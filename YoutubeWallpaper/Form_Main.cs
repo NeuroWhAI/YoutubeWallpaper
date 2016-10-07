@@ -269,6 +269,46 @@ namespace YoutubeWallpaper
 
         //#########################################################################################################
 
+        protected string GetValueInUrl(string url, string valueName)
+        {
+            int nameIndex = url.IndexOf(valueName);
+            if (nameIndex >= 0)
+            {
+                int beginSub = nameIndex + valueName.Length;
+
+                int endIndex = url.IndexOf('&', beginSub);
+                if (endIndex >= 0)
+                {
+                    return url.Substring(beginSub, endIndex - beginSub);
+                }
+                else
+                {
+                    return url.Substring(beginSub);
+                }
+            }
+
+            return string.Empty;
+        }
+
+        protected void ApplyOptionFromYoutubeUrl(string url)
+        {
+            string listId = GetValueInUrl(url, "list=");
+            if (string.IsNullOrEmpty(listId) == false)
+            {
+                this.radioButton_type_list.Checked = true;
+                this.textBox_id.Text = listId;
+            }
+            else
+            {
+                string oneId = GetValueInUrl(url, "v=");
+                if (string.IsNullOrEmpty(oneId) == false)
+                {
+                    this.radioButton_type_one.Checked = true;
+                    this.textBox_id.Text = oneId;
+                }
+            }
+        }
+
         protected void ApplyOptionToUI()
         {
             switch (m_option.IdType)
@@ -528,6 +568,11 @@ namespace YoutubeWallpaper
         private void radioButton_type_one_CheckedChanged(object sender, EventArgs e)
         {
             this.checkBox_isLive.Enabled = this.radioButton_type_one.Checked;
+        }
+
+        private void textBox_id_TextChanged(object sender, EventArgs e)
+        {
+            ApplyOptionFromYoutubeUrl(this.textBox_id.Text);
         }
     }
 }

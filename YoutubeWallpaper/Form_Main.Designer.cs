@@ -144,6 +144,7 @@
             this.textBox_id.Size = new System.Drawing.Size(273, 25);
             this.textBox_id.TabIndex = 1;
             this.toolTip_help.SetToolTip(this.textBox_id, "동영상이나 재생목록의 아이디.");
+            this.textBox_id.TextChanged += new System.EventHandler(this.textBox_id_TextChanged);
             // 
             // label1
             // 
