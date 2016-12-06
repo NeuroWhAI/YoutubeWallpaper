@@ -7,7 +7,7 @@ using System.Runtime.InteropServices;
 
 namespace YoutubeWallpaper
 {
-    public class WinApi
+    public static class WinApi
     {
         [Flags]
         public enum SendMessageTimeoutFlags : uint
@@ -51,6 +51,15 @@ namespace YoutubeWallpaper
         public static int MakeParam(int high, int low)
         {
             return ((high << 16) | (low & 0xFFFF));
+        }
+
+        [StructLayout(LayoutKind.Sequential)]
+        public struct RECT
+        {
+            public int Left;
+            public int Top;
+            public int Right;
+            public int Bottom;
         }
 
         [DllImport("user32.dll", SetLastError = true)]
@@ -106,7 +115,7 @@ namespace YoutubeWallpaper
             {
                 return (DwmIsCompositionEnabled(out enabled) == 0);
             }
-            catch(DllNotFoundException)
+            catch (DllNotFoundException)
             {
                 // Empty.
             }
@@ -129,5 +138,9 @@ namespace YoutubeWallpaper
                 // Empty.
             }
         }
+
+        [DllImport("user32.dll")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static extern bool GetWindowRect(IntPtr hWnd, out RECT lpRect);
     }
 }

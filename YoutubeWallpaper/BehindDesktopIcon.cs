@@ -7,7 +7,7 @@ using System.Threading;
 
 namespace YoutubeWallpaper
 {
-    public class BehindDesktopIcon
+    public static class BehindDesktopIcon
     {
         public static bool FixBehindDesktopIcon(IntPtr formHandle)
         {

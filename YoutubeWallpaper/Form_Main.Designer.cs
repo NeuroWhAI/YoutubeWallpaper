@@ -82,9 +82,11 @@
             this.groupBox1.Controls.Add(this.checkBox_isLive);
             this.groupBox1.Controls.Add(this.radioButton_type_list);
             this.groupBox1.Controls.Add(this.radioButton_type_one);
-            this.groupBox1.Location = new System.Drawing.Point(12, 41);
+            this.groupBox1.Location = new System.Drawing.Point(10, 33);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(311, 55);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.groupBox1.Size = new System.Drawing.Size(272, 44);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Type";
@@ -93,9 +95,10 @@
             // 
             this.checkBox_isLive.AutoSize = true;
             this.checkBox_isLive.Enabled = false;
-            this.checkBox_isLive.Location = new System.Drawing.Point(249, 24);
+            this.checkBox_isLive.Location = new System.Drawing.Point(218, 19);
+            this.checkBox_isLive.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.checkBox_isLive.Name = "checkBox_isLive";
-            this.checkBox_isLive.Size = new System.Drawing.Size(56, 19);
+            this.checkBox_isLive.Size = new System.Drawing.Size(47, 16);
             this.checkBox_isLive.TabIndex = 2;
             this.checkBox_isLive.Text = "Live";
             this.toolTip_help.SetToolTip(this.checkBox_isLive, "최신 플레이어를 사용하여 실시간 영상을 지원하도록 합니다.\r\n재생목록의 경우 기본적으로 지원합니다.");
@@ -104,9 +107,10 @@
             // radioButton_type_list
             // 
             this.radioButton_type_list.AutoSize = true;
-            this.radioButton_type_list.Location = new System.Drawing.Point(109, 24);
+            this.radioButton_type_list.Location = new System.Drawing.Point(95, 19);
+            this.radioButton_type_list.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.radioButton_type_list.Name = "radioButton_type_list";
-            this.radioButton_type_list.Size = new System.Drawing.Size(75, 19);
+            this.radioButton_type_list.Size = new System.Drawing.Size(64, 16);
             this.radioButton_type_list.TabIndex = 1;
             this.radioButton_type_list.TabStop = true;
             this.radioButton_type_list.Text = "Playlist";
@@ -116,9 +120,10 @@
             // radioButton_type_one
             // 
             this.radioButton_type_one.AutoSize = true;
-            this.radioButton_type_one.Location = new System.Drawing.Point(6, 24);
+            this.radioButton_type_one.Location = new System.Drawing.Point(5, 19);
+            this.radioButton_type_one.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.radioButton_type_one.Name = "radioButton_type_one";
-            this.radioButton_type_one.Size = new System.Drawing.Size(97, 19);
+            this.radioButton_type_one.Size = new System.Drawing.Size(80, 16);
             this.radioButton_type_one.TabIndex = 0;
             this.radioButton_type_one.TabStop = true;
             this.radioButton_type_one.Text = "One video";
@@ -130,18 +135,21 @@
             // 
             this.groupBox2.Controls.Add(this.textBox_id);
             this.groupBox2.Controls.Add(this.label1);
-            this.groupBox2.Location = new System.Drawing.Point(12, 102);
+            this.groupBox2.Location = new System.Drawing.Point(10, 82);
+            this.groupBox2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(311, 64);
+            this.groupBox2.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.groupBox2.Size = new System.Drawing.Size(272, 51);
             this.groupBox2.TabIndex = 1;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Information";
             // 
             // textBox_id
             // 
-            this.textBox_id.Location = new System.Drawing.Point(32, 24);
+            this.textBox_id.Location = new System.Drawing.Point(28, 19);
+            this.textBox_id.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.textBox_id.Name = "textBox_id";
-            this.textBox_id.Size = new System.Drawing.Size(273, 25);
+            this.textBox_id.Size = new System.Drawing.Size(239, 21);
             this.textBox_id.TabIndex = 1;
             this.toolTip_help.SetToolTip(this.textBox_id, "동영상이나 재생목록의 아이디.");
             this.textBox_id.TextChanged += new System.EventHandler(this.textBox_id_TextChanged);
@@ -149,9 +157,9 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(6, 27);
+            this.label1.Location = new System.Drawing.Point(5, 22);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(20, 15);
+            this.label1.Size = new System.Drawing.Size(16, 12);
             this.label1.TabIndex = 0;
             this.label1.Text = "ID";
             // 
@@ -163,9 +171,11 @@
             this.groupBox3.Controls.Add(this.radioButton_q_large);
             this.groupBox3.Controls.Add(this.radioButton_q_medium);
             this.groupBox3.Controls.Add(this.radioButton_q_small);
-            this.groupBox3.Location = new System.Drawing.Point(12, 172);
+            this.groupBox3.Location = new System.Drawing.Point(10, 138);
+            this.groupBox3.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(311, 83);
+            this.groupBox3.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.groupBox3.Size = new System.Drawing.Size(272, 66);
             this.groupBox3.TabIndex = 2;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Quality";
@@ -174,9 +184,10 @@
             // radioButton_q_1440
             // 
             this.radioButton_q_1440.AutoSize = true;
-            this.radioButton_q_1440.Location = new System.Drawing.Point(146, 49);
+            this.radioButton_q_1440.Location = new System.Drawing.Point(128, 39);
+            this.radioButton_q_1440.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.radioButton_q_1440.Name = "radioButton_q_1440";
-            this.radioButton_q_1440.Size = new System.Drawing.Size(68, 19);
+            this.radioButton_q_1440.Size = new System.Drawing.Size(54, 16);
             this.radioButton_q_1440.TabIndex = 5;
             this.radioButton_q_1440.TabStop = true;
             this.radioButton_q_1440.Text = "1440p";
@@ -185,9 +196,10 @@
             // radioButton_q_1080
             // 
             this.radioButton_q_1080.AutoSize = true;
-            this.radioButton_q_1080.Location = new System.Drawing.Point(72, 49);
+            this.radioButton_q_1080.Location = new System.Drawing.Point(63, 39);
+            this.radioButton_q_1080.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.radioButton_q_1080.Name = "radioButton_q_1080";
-            this.radioButton_q_1080.Size = new System.Drawing.Size(68, 19);
+            this.radioButton_q_1080.Size = new System.Drawing.Size(54, 16);
             this.radioButton_q_1080.TabIndex = 4;
             this.radioButton_q_1080.TabStop = true;
             this.radioButton_q_1080.Text = "1080p";
@@ -196,9 +208,10 @@
             // radioButton_q_720
             // 
             this.radioButton_q_720.AutoSize = true;
-            this.radioButton_q_720.Location = new System.Drawing.Point(6, 49);
+            this.radioButton_q_720.Location = new System.Drawing.Point(5, 39);
+            this.radioButton_q_720.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.radioButton_q_720.Name = "radioButton_q_720";
-            this.radioButton_q_720.Size = new System.Drawing.Size(60, 19);
+            this.radioButton_q_720.Size = new System.Drawing.Size(48, 16);
             this.radioButton_q_720.TabIndex = 3;
             this.radioButton_q_720.TabStop = true;
             this.radioButton_q_720.Text = "720p";
@@ -207,9 +220,10 @@
             // radioButton_q_large
             // 
             this.radioButton_q_large.AutoSize = true;
-            this.radioButton_q_large.Location = new System.Drawing.Point(146, 24);
+            this.radioButton_q_large.Location = new System.Drawing.Point(128, 19);
+            this.radioButton_q_large.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.radioButton_q_large.Name = "radioButton_q_large";
-            this.radioButton_q_large.Size = new System.Drawing.Size(60, 19);
+            this.radioButton_q_large.Size = new System.Drawing.Size(48, 16);
             this.radioButton_q_large.TabIndex = 2;
             this.radioButton_q_large.TabStop = true;
             this.radioButton_q_large.Text = "480p";
@@ -218,9 +232,10 @@
             // radioButton_q_medium
             // 
             this.radioButton_q_medium.AutoSize = true;
-            this.radioButton_q_medium.Location = new System.Drawing.Point(72, 24);
+            this.radioButton_q_medium.Location = new System.Drawing.Point(63, 19);
+            this.radioButton_q_medium.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.radioButton_q_medium.Name = "radioButton_q_medium";
-            this.radioButton_q_medium.Size = new System.Drawing.Size(60, 19);
+            this.radioButton_q_medium.Size = new System.Drawing.Size(48, 16);
             this.radioButton_q_medium.TabIndex = 1;
             this.radioButton_q_medium.TabStop = true;
             this.radioButton_q_medium.Text = "360p";
@@ -229,9 +244,10 @@
             // radioButton_q_small
             // 
             this.radioButton_q_small.AutoSize = true;
-            this.radioButton_q_small.Location = new System.Drawing.Point(6, 24);
+            this.radioButton_q_small.Location = new System.Drawing.Point(5, 19);
+            this.radioButton_q_small.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.radioButton_q_small.Name = "radioButton_q_small";
-            this.radioButton_q_small.Size = new System.Drawing.Size(60, 19);
+            this.radioButton_q_small.Size = new System.Drawing.Size(48, 16);
             this.radioButton_q_small.TabIndex = 0;
             this.radioButton_q_small.TabStop = true;
             this.radioButton_q_small.Text = "240p";
@@ -239,9 +255,10 @@
             // 
             // button_apply
             // 
-            this.button_apply.Location = new System.Drawing.Point(12, 363);
+            this.button_apply.Location = new System.Drawing.Point(10, 290);
+            this.button_apply.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.button_apply.Name = "button_apply";
-            this.button_apply.Size = new System.Drawing.Size(148, 38);
+            this.button_apply.Size = new System.Drawing.Size(130, 30);
             this.button_apply.TabIndex = 4;
             this.button_apply.Text = "Save and Start";
             this.toolTip_help.SetToolTip(this.button_apply, "설정을 저장하고 플레이어를 실행시킵니다.");
@@ -250,9 +267,10 @@
             // 
             // button_restore
             // 
-            this.button_restore.Location = new System.Drawing.Point(175, 363);
+            this.button_restore.Location = new System.Drawing.Point(153, 290);
+            this.button_restore.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.button_restore.Name = "button_restore";
-            this.button_restore.Size = new System.Drawing.Size(148, 38);
+            this.button_restore.Size = new System.Drawing.Size(130, 30);
             this.button_restore.TabIndex = 5;
             this.button_restore.Text = "Restore option";
             this.toolTip_help.SetToolTip(this.button_restore, "옵션을 저장하기 전으로 되돌립니다.");
@@ -268,7 +286,8 @@
             this.helpToolStripMenuItem});
             this.menuStrip_top.Location = new System.Drawing.Point(0, 0);
             this.menuStrip_top.Name = "menuStrip_top";
-            this.menuStrip_top.Size = new System.Drawing.Size(335, 28);
+            this.menuStrip_top.Padding = new System.Windows.Forms.Padding(5, 2, 0, 2);
+            this.menuStrip_top.Size = new System.Drawing.Size(293, 24);
             this.menuStrip_top.TabIndex = 5;
             this.menuStrip_top.Text = "menuStrip1";
             // 
@@ -279,28 +298,28 @@
             this.ToolStripMenuItem_hideController,
             this.ToolStripMenuItem_exit});
             this.programToolStripMenuItem.Name = "programToolStripMenuItem";
-            this.programToolStripMenuItem.Size = new System.Drawing.Size(79, 24);
+            this.programToolStripMenuItem.Size = new System.Drawing.Size(65, 20);
             this.programToolStripMenuItem.Text = "Program";
             // 
             // ToolStripMenuItem_startup
             // 
             this.ToolStripMenuItem_startup.CheckOnClick = true;
             this.ToolStripMenuItem_startup.Name = "ToolStripMenuItem_startup";
-            this.ToolStripMenuItem_startup.Size = new System.Drawing.Size(261, 26);
+            this.ToolStripMenuItem_startup.Size = new System.Drawing.Size(215, 22);
             this.ToolStripMenuItem_startup.Text = "Start when windows starts";
             this.ToolStripMenuItem_startup.Click += new System.EventHandler(this.ToolStripMenuItem_startup_Click);
             // 
             // ToolStripMenuItem_hideController
             // 
             this.ToolStripMenuItem_hideController.Name = "ToolStripMenuItem_hideController";
-            this.ToolStripMenuItem_hideController.Size = new System.Drawing.Size(261, 26);
+            this.ToolStripMenuItem_hideController.Size = new System.Drawing.Size(215, 22);
             this.ToolStripMenuItem_hideController.Text = "Hide";
             this.ToolStripMenuItem_hideController.Click += new System.EventHandler(this.ToolStripMenuItem_hideController_Click);
             // 
             // ToolStripMenuItem_exit
             // 
             this.ToolStripMenuItem_exit.Name = "ToolStripMenuItem_exit";
-            this.ToolStripMenuItem_exit.Size = new System.Drawing.Size(261, 26);
+            this.ToolStripMenuItem_exit.Size = new System.Drawing.Size(215, 22);
             this.ToolStripMenuItem_exit.Text = "Exit";
             this.ToolStripMenuItem_exit.Click += new System.EventHandler(this.ToolStripMenuItem_exit_Click);
             // 
@@ -312,34 +331,34 @@
             this.ToolStripMenuItem_mute,
             this.ToolStripMenuItem_nextScreen});
             this.wallpaperToolStripMenuItem.Name = "wallpaperToolStripMenuItem";
-            this.wallpaperToolStripMenuItem.Size = new System.Drawing.Size(90, 24);
+            this.wallpaperToolStripMenuItem.Size = new System.Drawing.Size(72, 20);
             this.wallpaperToolStripMenuItem.Text = "Wallpaper";
             // 
             // ToolStripMenuItem_openTouchpad
             // 
             this.ToolStripMenuItem_openTouchpad.Name = "ToolStripMenuItem_openTouchpad";
-            this.ToolStripMenuItem_openTouchpad.Size = new System.Drawing.Size(192, 26);
+            this.ToolStripMenuItem_openTouchpad.Size = new System.Drawing.Size(158, 22);
             this.ToolStripMenuItem_openTouchpad.Text = "Open touchpad";
             this.ToolStripMenuItem_openTouchpad.Click += new System.EventHandler(this.ToolStripMenuItem_openTouchpad_Click);
             // 
             // ToolStripMenuItem_stopWallpaper
             // 
             this.ToolStripMenuItem_stopWallpaper.Name = "ToolStripMenuItem_stopWallpaper";
-            this.ToolStripMenuItem_stopWallpaper.Size = new System.Drawing.Size(192, 26);
+            this.ToolStripMenuItem_stopWallpaper.Size = new System.Drawing.Size(158, 22);
             this.ToolStripMenuItem_stopWallpaper.Text = "Stop";
             this.ToolStripMenuItem_stopWallpaper.Click += new System.EventHandler(this.ToolStripMenuItem_stopWallpaper_Click);
             // 
             // ToolStripMenuItem_mute
             // 
             this.ToolStripMenuItem_mute.Name = "ToolStripMenuItem_mute";
-            this.ToolStripMenuItem_mute.Size = new System.Drawing.Size(192, 26);
+            this.ToolStripMenuItem_mute.Size = new System.Drawing.Size(158, 22);
             this.ToolStripMenuItem_mute.Text = "Mute";
             this.ToolStripMenuItem_mute.Click += new System.EventHandler(this.ToolStripMenuItem_mute_Click);
             // 
             // ToolStripMenuItem_nextScreen
             // 
             this.ToolStripMenuItem_nextScreen.Name = "ToolStripMenuItem_nextScreen";
-            this.ToolStripMenuItem_nextScreen.Size = new System.Drawing.Size(192, 26);
+            this.ToolStripMenuItem_nextScreen.Size = new System.Drawing.Size(158, 22);
             this.ToolStripMenuItem_nextScreen.Text = "Next screen";
             this.ToolStripMenuItem_nextScreen.Click += new System.EventHandler(this.ToolStripMenuItem_nextScreen_Click);
             // 
@@ -348,13 +367,13 @@
             this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.ToolStripMenuItem_openBlog});
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
-            this.helpToolStripMenuItem.Size = new System.Drawing.Size(53, 24);
+            this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
             this.helpToolStripMenuItem.Text = "Help";
             // 
             // ToolStripMenuItem_openBlog
             // 
             this.ToolStripMenuItem_openBlog.Name = "ToolStripMenuItem_openBlog";
-            this.ToolStripMenuItem_openBlog.Size = new System.Drawing.Size(115, 26);
+            this.ToolStripMenuItem_openBlog.Size = new System.Drawing.Size(98, 22);
             this.ToolStripMenuItem_openBlog.Text = "Blog";
             this.ToolStripMenuItem_openBlog.Click += new System.EventHandler(this.ToolStripMenuItem_openBlog_Click);
             // 
@@ -363,6 +382,7 @@
             this.notifyIcon_tray.ContextMenuStrip = this.contextMenuStrip_tray;
             this.notifyIcon_tray.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyIcon_tray.Icon")));
             this.notifyIcon_tray.Text = "Youtube Wallpaper";
+            this.notifyIcon_tray.BalloonTipClicked += new System.EventHandler(this.notifyIcon_tray_BalloonTipClicked);
             this.notifyIcon_tray.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.notifyIcon_tray_MouseDoubleClick);
             // 
             // contextMenuStrip_tray
@@ -375,49 +395,51 @@
             this.ToolStripMenuItem_muteInTray,
             this.ToolStripMenuItem_exitInTray});
             this.contextMenuStrip_tray.Name = "contextMenuStrip_tray";
-            this.contextMenuStrip_tray.Size = new System.Drawing.Size(193, 134);
+            this.contextMenuStrip_tray.Size = new System.Drawing.Size(159, 114);
             // 
             // ToolStripMenuItem_openController
             // 
             this.ToolStripMenuItem_openController.Name = "ToolStripMenuItem_openController";
-            this.ToolStripMenuItem_openController.Size = new System.Drawing.Size(192, 26);
+            this.ToolStripMenuItem_openController.Size = new System.Drawing.Size(158, 22);
             this.ToolStripMenuItem_openController.Text = "Open";
             this.ToolStripMenuItem_openController.Click += new System.EventHandler(this.ToolStripMenuItem_openController_Click);
             // 
             // ToolStripMenuItem_openTouchpadInTray
             // 
             this.ToolStripMenuItem_openTouchpadInTray.Name = "ToolStripMenuItem_openTouchpadInTray";
-            this.ToolStripMenuItem_openTouchpadInTray.Size = new System.Drawing.Size(192, 26);
+            this.ToolStripMenuItem_openTouchpadInTray.Size = new System.Drawing.Size(158, 22);
             this.ToolStripMenuItem_openTouchpadInTray.Text = "Open touchpad";
             this.ToolStripMenuItem_openTouchpadInTray.Click += new System.EventHandler(this.ToolStripMenuItem_openTouchpadInTray_Click);
             // 
             // ToolStripMenuItem_stopWallpaperInTray
             // 
             this.ToolStripMenuItem_stopWallpaperInTray.Name = "ToolStripMenuItem_stopWallpaperInTray";
-            this.ToolStripMenuItem_stopWallpaperInTray.Size = new System.Drawing.Size(192, 26);
+            this.ToolStripMenuItem_stopWallpaperInTray.Size = new System.Drawing.Size(158, 22);
             this.ToolStripMenuItem_stopWallpaperInTray.Text = "Stop";
             this.ToolStripMenuItem_stopWallpaperInTray.Click += new System.EventHandler(this.ToolStripMenuItem_stopWallpaperInTray_Click);
             // 
             // ToolStripMenuItem_muteInTray
             // 
             this.ToolStripMenuItem_muteInTray.Name = "ToolStripMenuItem_muteInTray";
-            this.ToolStripMenuItem_muteInTray.Size = new System.Drawing.Size(192, 26);
+            this.ToolStripMenuItem_muteInTray.Size = new System.Drawing.Size(158, 22);
             this.ToolStripMenuItem_muteInTray.Text = "Mute";
             this.ToolStripMenuItem_muteInTray.Click += new System.EventHandler(this.ToolStripMenuItem_muteInTray_Click);
             // 
             // ToolStripMenuItem_exitInTray
             // 
             this.ToolStripMenuItem_exitInTray.Name = "ToolStripMenuItem_exitInTray";
-            this.ToolStripMenuItem_exitInTray.Size = new System.Drawing.Size(192, 26);
+            this.ToolStripMenuItem_exitInTray.Size = new System.Drawing.Size(158, 22);
             this.ToolStripMenuItem_exitInTray.Text = "Exit";
             this.ToolStripMenuItem_exitInTray.Click += new System.EventHandler(this.ToolStripMenuItem_exitInTray_Click);
             // 
             // groupBox4
             // 
             this.groupBox4.Controls.Add(this.trackBar_volume);
-            this.groupBox4.Location = new System.Drawing.Point(12, 261);
+            this.groupBox4.Location = new System.Drawing.Point(10, 209);
+            this.groupBox4.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(311, 86);
+            this.groupBox4.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.groupBox4.Size = new System.Drawing.Size(272, 69);
             this.groupBox4.TabIndex = 3;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Audio";
@@ -425,10 +447,11 @@
             // trackBar_volume
             // 
             this.trackBar_volume.LargeChange = 2;
-            this.trackBar_volume.Location = new System.Drawing.Point(6, 24);
+            this.trackBar_volume.Location = new System.Drawing.Point(5, 19);
+            this.trackBar_volume.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.trackBar_volume.Maximum = 100;
             this.trackBar_volume.Name = "trackBar_volume";
-            this.trackBar_volume.Size = new System.Drawing.Size(299, 56);
+            this.trackBar_volume.Size = new System.Drawing.Size(262, 45);
             this.trackBar_volume.TabIndex = 0;
             this.toolTip_help.SetToolTip(this.trackBar_volume, "오디오 볼륨 조절.");
             this.trackBar_volume.Scroll += new System.EventHandler(this.trackBar_volume_Scroll);
@@ -443,9 +466,9 @@
             // 
             // Form_Main
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(335, 413);
+            this.ClientSize = new System.Drawing.Size(293, 330);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.button_restore);
             this.Controls.Add(this.button_apply);
@@ -456,6 +479,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip_top;
+            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.MaximizeBox = false;
             this.Name = "Form_Main";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

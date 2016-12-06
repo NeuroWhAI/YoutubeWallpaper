@@ -123,6 +123,8 @@ namespace YoutubeWallpaper
             this.Hide();
 
             this.notifyIcon_tray.Visible = true;
+
+            this.notifyIcon_tray.ShowBalloonTip(1000, "Youtube Wallpaper", "Click me to open.", ToolTipIcon.None);
         }
 
         protected void ShowController()
@@ -158,13 +160,20 @@ namespace YoutubeWallpaper
             StringBuilder url = new StringBuilder(@"https://www.youtube.com/");
 
             if (m_option.IdType == Option.Type.OneVideo)
+            {
                 url.Append(@"v/");
+            }
             else if (m_option.IdType == Option.Type.Playlist)
-                url.Append(@"embed?listType=playlist&index=0&list=");
+            {
+                // embed 태그가 원하는대로 작동하지 않으니 v 태그를 사용하되
+                // 아주 짧은 영상(Q3HPz3h-_AE)을 먼저 재생하고 자동으로 다음에 재생될 영상을
+                // 유저가 설정한 재생목록으로 해두면 v 태그로 재생목록도 재생 가능!
+                url.Append(@"v/Q3HPz3h-_AE?listType=playlist&index=0&list=");
+            }
 
             url.Append(m_option.Id);
 
-            url.Append(@"&autoplay=1&loop=1&controls=0&showinfo=0&autohide=1&modestbranding=1&rel=0");
+            url.Append(@"&autoplay=1&loop=1&controls=0&showinfo=0&autohide=1&modestbranding=1&rel=0&iv_load_policy=3&playsinline=0");
 
             // OneVideo는 구버전 플레이어만 loop를 지원하므로 그렇게하되
             // 실시간 동영상이면 그렇게하지 않는다.
@@ -522,6 +531,11 @@ namespace YoutubeWallpaper
         //#########################################################################################################
 
         private void notifyIcon_tray_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            ShowController();
+        }
+
+        private void notifyIcon_tray_BalloonTipClicked(object sender, EventArgs e)
         {
             ShowController();
         }

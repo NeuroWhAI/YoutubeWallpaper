@@ -139,16 +139,16 @@ namespace YoutubeWallpaper
             {
                 IntPtr result = IntPtr.Zero;
 
-                // 첫번째 클릭에서 포커스를 잠깐 얻고
+                // 첫번째 이벤트에서 포커스를 잠깐 얻고
+                WinApi.SendMessageTimeout(flash, 0x202/*UP*/, new IntPtr(1), new IntPtr(WinApi.MakeParam(y, x)),
+                    WinApi.SendMessageTimeoutFlags.SMTO_NORMAL, 0, out result);
+
                 // 두번째 클릭에서 실제로 클릭이 처리되게 하게끔 함.
-                // TODO: 아래 방법은 개선되어야 함.
-                for (int step = 0; step < 2; ++step)
-                {
-                    WinApi.SendMessageTimeout(flash, 0x201/*DOWN*/, new IntPtr(1), new IntPtr(WinApi.MakeParam(y, x)),
+
+                WinApi.SendMessageTimeout(flash, 0x201/*DOWN*/, new IntPtr(1), new IntPtr(WinApi.MakeParam(y, x)),
                         WinApi.SendMessageTimeoutFlags.SMTO_NORMAL, 0, out result);
-                    WinApi.SendMessageTimeout(flash, 0x202/*UP*/, new IntPtr(1), new IntPtr(WinApi.MakeParam(y, x)),
-                        WinApi.SendMessageTimeoutFlags.SMTO_NORMAL, 0, out result);
-                }
+                WinApi.SendMessageTimeout(flash, 0x202/*UP*/, new IntPtr(1), new IntPtr(WinApi.MakeParam(y, x)),
+                    WinApi.SendMessageTimeoutFlags.SMTO_NORMAL, 0, out result);
             }
         }
 
