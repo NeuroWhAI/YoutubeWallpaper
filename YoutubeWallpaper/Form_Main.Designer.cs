@@ -31,7 +31,6 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form_Main));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.checkBox_isLive = new System.Windows.Forms.CheckBox();
             this.radioButton_type_list = new System.Windows.Forms.RadioButton();
             this.radioButton_type_one = new System.Windows.Forms.RadioButton();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
@@ -53,6 +52,7 @@
             this.ToolStripMenuItem_exit = new System.Windows.Forms.ToolStripMenuItem();
             this.wallpaperToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ToolStripMenuItem_openTouchpad = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem_togglePlayWallpaper = new System.Windows.Forms.ToolStripMenuItem();
             this.ToolStripMenuItem_stopWallpaper = new System.Windows.Forms.ToolStripMenuItem();
             this.ToolStripMenuItem_mute = new System.Windows.Forms.ToolStripMenuItem();
             this.ToolStripMenuItem_nextScreen = new System.Windows.Forms.ToolStripMenuItem();
@@ -68,6 +68,11 @@
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.trackBar_volume = new System.Windows.Forms.TrackBar();
             this.toolTip_help = new System.Windows.Forms.ToolTip(this.components);
+            this.ToolStripMenuItem_togglePlayWallpaperInTray = new System.Windows.Forms.ToolStripMenuItem();
+            this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.radioButton_muteWhenOverlayed = new System.Windows.Forms.RadioButton();
+            this.radioButton_nothingWhenOverlayed = new System.Windows.Forms.RadioButton();
+            this.radioButton_toggleWhenOverlayed = new System.Windows.Forms.RadioButton();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -75,11 +80,11 @@
             this.contextMenuStrip_tray.SuspendLayout();
             this.groupBox4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar_volume)).BeginInit();
+            this.groupBox5.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.checkBox_isLive);
             this.groupBox1.Controls.Add(this.radioButton_type_list);
             this.groupBox1.Controls.Add(this.radioButton_type_one);
             this.groupBox1.Location = new System.Drawing.Point(10, 33);
@@ -90,19 +95,7 @@
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Type";
-            // 
-            // checkBox_isLive
-            // 
-            this.checkBox_isLive.AutoSize = true;
-            this.checkBox_isLive.Enabled = false;
-            this.checkBox_isLive.Location = new System.Drawing.Point(218, 19);
-            this.checkBox_isLive.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.checkBox_isLive.Name = "checkBox_isLive";
-            this.checkBox_isLive.Size = new System.Drawing.Size(47, 16);
-            this.checkBox_isLive.TabIndex = 2;
-            this.checkBox_isLive.Text = "Live";
-            this.toolTip_help.SetToolTip(this.checkBox_isLive, "최신 플레이어를 사용하여 실시간 영상을 지원하도록 합니다.\r\n재생목록의 경우 기본적으로 지원합니다.");
-            this.checkBox_isLive.UseVisualStyleBackColor = true;
+            this.toolTip_help.SetToolTip(this.groupBox1, "ID 종류.");
             // 
             // radioButton_type_list
             // 
@@ -129,7 +122,6 @@
             this.radioButton_type_one.Text = "One video";
             this.toolTip_help.SetToolTip(this.radioButton_type_one, "재생목록이 아닌 하나의 영상.");
             this.radioButton_type_one.UseVisualStyleBackColor = true;
-            this.radioButton_type_one.CheckedChanged += new System.EventHandler(this.radioButton_type_one_CheckedChanged);
             // 
             // groupBox2
             // 
@@ -255,7 +247,7 @@
             // 
             // button_apply
             // 
-            this.button_apply.Location = new System.Drawing.Point(10, 290);
+            this.button_apply.Location = new System.Drawing.Point(9, 336);
             this.button_apply.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.button_apply.Name = "button_apply";
             this.button_apply.Size = new System.Drawing.Size(130, 30);
@@ -267,7 +259,7 @@
             // 
             // button_restore
             // 
-            this.button_restore.Location = new System.Drawing.Point(153, 290);
+            this.button_restore.Location = new System.Drawing.Point(152, 336);
             this.button_restore.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.button_restore.Name = "button_restore";
             this.button_restore.Size = new System.Drawing.Size(130, 30);
@@ -327,6 +319,7 @@
             // 
             this.wallpaperToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.ToolStripMenuItem_openTouchpad,
+            this.toolStripMenuItem_togglePlayWallpaper,
             this.ToolStripMenuItem_stopWallpaper,
             this.ToolStripMenuItem_mute,
             this.ToolStripMenuItem_nextScreen});
@@ -337,29 +330,36 @@
             // ToolStripMenuItem_openTouchpad
             // 
             this.ToolStripMenuItem_openTouchpad.Name = "ToolStripMenuItem_openTouchpad";
-            this.ToolStripMenuItem_openTouchpad.Size = new System.Drawing.Size(158, 22);
+            this.ToolStripMenuItem_openTouchpad.Size = new System.Drawing.Size(194, 22);
             this.ToolStripMenuItem_openTouchpad.Text = "Open touchpad";
             this.ToolStripMenuItem_openTouchpad.Click += new System.EventHandler(this.ToolStripMenuItem_openTouchpad_Click);
+            // 
+            // toolStripMenuItem_togglePlayWallpaper
+            // 
+            this.toolStripMenuItem_togglePlayWallpaper.Name = "toolStripMenuItem_togglePlayWallpaper";
+            this.toolStripMenuItem_togglePlayWallpaper.Size = new System.Drawing.Size(194, 22);
+            this.toolStripMenuItem_togglePlayWallpaper.Text = "Toggle play";
+            this.toolStripMenuItem_togglePlayWallpaper.Click += new System.EventHandler(this.toolStripMenuItem_togglePlayWallpaper_Click);
             // 
             // ToolStripMenuItem_stopWallpaper
             // 
             this.ToolStripMenuItem_stopWallpaper.Name = "ToolStripMenuItem_stopWallpaper";
-            this.ToolStripMenuItem_stopWallpaper.Size = new System.Drawing.Size(158, 22);
+            this.ToolStripMenuItem_stopWallpaper.Size = new System.Drawing.Size(194, 22);
             this.ToolStripMenuItem_stopWallpaper.Text = "Stop";
             this.ToolStripMenuItem_stopWallpaper.Click += new System.EventHandler(this.ToolStripMenuItem_stopWallpaper_Click);
             // 
             // ToolStripMenuItem_mute
             // 
             this.ToolStripMenuItem_mute.Name = "ToolStripMenuItem_mute";
-            this.ToolStripMenuItem_mute.Size = new System.Drawing.Size(158, 22);
+            this.ToolStripMenuItem_mute.Size = new System.Drawing.Size(194, 22);
             this.ToolStripMenuItem_mute.Text = "Mute";
             this.ToolStripMenuItem_mute.Click += new System.EventHandler(this.ToolStripMenuItem_mute_Click);
             // 
             // ToolStripMenuItem_nextScreen
             // 
             this.ToolStripMenuItem_nextScreen.Name = "ToolStripMenuItem_nextScreen";
-            this.ToolStripMenuItem_nextScreen.Size = new System.Drawing.Size(158, 22);
-            this.ToolStripMenuItem_nextScreen.Text = "Next screen";
+            this.ToolStripMenuItem_nextScreen.Size = new System.Drawing.Size(194, 22);
+            this.ToolStripMenuItem_nextScreen.Text = "Place on next monitor";
             this.ToolStripMenuItem_nextScreen.Click += new System.EventHandler(this.ToolStripMenuItem_nextScreen_Click);
             // 
             // helpToolStripMenuItem
@@ -391,11 +391,12 @@
             this.contextMenuStrip_tray.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.ToolStripMenuItem_openController,
             this.ToolStripMenuItem_openTouchpadInTray,
+            this.ToolStripMenuItem_togglePlayWallpaperInTray,
             this.ToolStripMenuItem_stopWallpaperInTray,
             this.ToolStripMenuItem_muteInTray,
             this.ToolStripMenuItem_exitInTray});
             this.contextMenuStrip_tray.Name = "contextMenuStrip_tray";
-            this.contextMenuStrip_tray.Size = new System.Drawing.Size(159, 114);
+            this.contextMenuStrip_tray.Size = new System.Drawing.Size(159, 136);
             // 
             // ToolStripMenuItem_openController
             // 
@@ -464,11 +465,73 @@
             this.toolTip_help.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info;
             this.toolTip_help.ToolTipTitle = "Help";
             // 
+            // ToolStripMenuItem_togglePlayWallpaperInTray
+            // 
+            this.ToolStripMenuItem_togglePlayWallpaperInTray.Name = "ToolStripMenuItem_togglePlayWallpaperInTray";
+            this.ToolStripMenuItem_togglePlayWallpaperInTray.Size = new System.Drawing.Size(158, 22);
+            this.ToolStripMenuItem_togglePlayWallpaperInTray.Text = "Toggle play";
+            this.ToolStripMenuItem_togglePlayWallpaperInTray.Click += new System.EventHandler(this.ToolStripMenuItem_togglePlayWallpaperInTray_Click);
+            // 
+            // groupBox5
+            // 
+            this.groupBox5.Controls.Add(this.radioButton_toggleWhenOverlayed);
+            this.groupBox5.Controls.Add(this.radioButton_muteWhenOverlayed);
+            this.groupBox5.Controls.Add(this.radioButton_nothingWhenOverlayed);
+            this.groupBox5.Location = new System.Drawing.Point(10, 282);
+            this.groupBox5.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.groupBox5.Name = "groupBox5";
+            this.groupBox5.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.groupBox5.Size = new System.Drawing.Size(272, 44);
+            this.groupBox5.TabIndex = 2;
+            this.groupBox5.TabStop = false;
+            this.groupBox5.Text = "When overlayed";
+            this.toolTip_help.SetToolTip(this.groupBox5, "배경이 다른 전체화면 프로그램에 가려진 경우 수행할 작업.");
+            // 
+            // radioButton_muteWhenOverlayed
+            // 
+            this.radioButton_muteWhenOverlayed.AutoSize = true;
+            this.radioButton_muteWhenOverlayed.Location = new System.Drawing.Point(95, 19);
+            this.radioButton_muteWhenOverlayed.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.radioButton_muteWhenOverlayed.Name = "radioButton_muteWhenOverlayed";
+            this.radioButton_muteWhenOverlayed.Size = new System.Drawing.Size(51, 16);
+            this.radioButton_muteWhenOverlayed.TabIndex = 1;
+            this.radioButton_muteWhenOverlayed.Text = "Mute";
+            this.toolTip_help.SetToolTip(this.radioButton_muteWhenOverlayed, "음소거 합니다.");
+            this.radioButton_muteWhenOverlayed.UseVisualStyleBackColor = true;
+            this.radioButton_muteWhenOverlayed.CheckedChanged += new System.EventHandler(this.radioButton_muteWhenOverlayed_CheckedChanged);
+            // 
+            // radioButton_nothingWhenOverlayed
+            // 
+            this.radioButton_nothingWhenOverlayed.AutoSize = true;
+            this.radioButton_nothingWhenOverlayed.Location = new System.Drawing.Point(5, 19);
+            this.radioButton_nothingWhenOverlayed.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.radioButton_nothingWhenOverlayed.Name = "radioButton_nothingWhenOverlayed";
+            this.radioButton_nothingWhenOverlayed.Size = new System.Drawing.Size(66, 16);
+            this.radioButton_nothingWhenOverlayed.TabIndex = 0;
+            this.radioButton_nothingWhenOverlayed.Text = "Nothing";
+            this.toolTip_help.SetToolTip(this.radioButton_nothingWhenOverlayed, "아무 작업도 하지 않습니다.");
+            this.radioButton_nothingWhenOverlayed.UseVisualStyleBackColor = true;
+            this.radioButton_nothingWhenOverlayed.CheckedChanged += new System.EventHandler(this.radioButton_nothingWhenOverlayed_CheckedChanged);
+            // 
+            // radioButton_toggleWhenOverlayed
+            // 
+            this.radioButton_toggleWhenOverlayed.AutoSize = true;
+            this.radioButton_toggleWhenOverlayed.Location = new System.Drawing.Point(170, 19);
+            this.radioButton_toggleWhenOverlayed.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.radioButton_toggleWhenOverlayed.Name = "radioButton_toggleWhenOverlayed";
+            this.radioButton_toggleWhenOverlayed.Size = new System.Drawing.Size(62, 16);
+            this.radioButton_toggleWhenOverlayed.TabIndex = 2;
+            this.radioButton_toggleWhenOverlayed.Text = "Toggle";
+            this.toolTip_help.SetToolTip(this.radioButton_toggleWhenOverlayed, "일시정지/재생 합니다.");
+            this.radioButton_toggleWhenOverlayed.UseVisualStyleBackColor = true;
+            this.radioButton_toggleWhenOverlayed.CheckedChanged += new System.EventHandler(this.radioButton_toggleWhenOverlayed_CheckedChanged);
+            // 
             // Form_Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(293, 330);
+            this.ClientSize = new System.Drawing.Size(293, 377);
+            this.Controls.Add(this.groupBox5);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.button_restore);
             this.Controls.Add(this.button_apply);
@@ -498,6 +561,8 @@
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar_volume)).EndInit();
+            this.groupBox5.ResumeLayout(false);
+            this.groupBox5.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -541,8 +606,13 @@
         private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem_openTouchpad;
         private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem_openTouchpadInTray;
         private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem_nextScreen;
-        private System.Windows.Forms.CheckBox checkBox_isLive;
         private System.Windows.Forms.ToolTip toolTip_help;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem_togglePlayWallpaper;
+        private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem_togglePlayWallpaperInTray;
+        private System.Windows.Forms.GroupBox groupBox5;
+        private System.Windows.Forms.RadioButton radioButton_toggleWhenOverlayed;
+        private System.Windows.Forms.RadioButton radioButton_muteWhenOverlayed;
+        private System.Windows.Forms.RadioButton radioButton_nothingWhenOverlayed;
     }
 }
 

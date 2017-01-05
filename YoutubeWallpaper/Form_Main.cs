@@ -154,6 +154,9 @@ namespace YoutubeWallpaper
 
         protected void PlayWallpaper()
         {
+            // https://developers.google.com/youtube/player_parameters 참조
+
+
             StopWallpaper();
 
 
@@ -162,6 +165,9 @@ namespace YoutubeWallpaper
             if (m_option.IdType == Option.Type.OneVideo)
             {
                 url.Append(@"v/");
+                url.Append(m_option.Id);
+                url.Append(@"?playlist=");
+                url.Append(m_option.Id);
             }
             else if (m_option.IdType == Option.Type.Playlist)
             {
@@ -169,19 +175,11 @@ namespace YoutubeWallpaper
                 // 아주 짧은 영상(Q3HPz3h-_AE)을 먼저 재생하고 자동으로 다음에 재생될 영상을
                 // 유저가 설정한 재생목록으로 해두면 v 태그로 재생목록도 재생 가능!
                 url.Append(@"v/Q3HPz3h-_AE?listType=playlist&index=0&list=");
+                url.Append(m_option.Id);
             }
 
-            url.Append(m_option.Id);
-
-            url.Append(@"&autoplay=1&loop=1&controls=0&showinfo=0&autohide=1&modestbranding=1&rel=0&iv_load_policy=3&playsinline=0");
-
-            // OneVideo는 구버전 플레이어만 loop를 지원하므로 그렇게하되
-            // 실시간 동영상이면 그렇게하지 않는다.
-            if (m_option.IdType == Option.Type.OneVideo
-                && m_option.IsLive == false)
-            {
-                url.Append(@"&version=2");
-            }
+            // TODO: controls를 1로 하면 귀찮더라도 이전/다음 영상으로 넘어가는 조작이 가능함.
+            url.Append(@"&autoplay=1&loop=1&controls=0&showinfo=0&autohide=1&modestbranding=1&rel=0&iv_load_policy=3&playsinline=0&cc_load_policy=0&version=3");
 
             url.Append("&vq=");
 
@@ -218,7 +216,9 @@ namespace YoutubeWallpaper
 
             m_wallpaper = new Form_Wallpaper(m_option.ScreenIndex);
             m_wallpaper.Volume = m_option.Volume;
+            SetOverlayJob(m_option.JobWhenOverlayed);
             m_wallpaper.Show();
+
 
             if (m_touchpad != null)
             {
@@ -235,6 +235,17 @@ namespace YoutubeWallpaper
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
 
                 StopWallpaper();
+            }
+        }
+
+        protected void TogglePlayWallpaper()
+        {
+            if (m_wallpaper != null)
+            {
+                m_wallpaper.TogglePlay();
+
+                // 안하면 월페이퍼가 포커스를 가져서 조작이 이상해짐.
+                this.Select();
             }
         }
 
@@ -262,15 +273,21 @@ namespace YoutubeWallpaper
         {
             if (m_wallpaper != null)
             {
+                // 화면 전환
                 m_wallpaper.OwnerScreenIndex++;
-                m_option.ScreenIndex = m_wallpaper.OwnerScreenIndex;
 
-                if (m_wallpaper.IsFixed == false)
+                // 전환에 성공하였으면 설정을 저장하고
+                // 그렇지 않으면 정지.
+                if (m_wallpaper.IsFixed)
+                {
+                    m_option.ScreenIndex = m_wallpaper.OwnerScreenIndex;
+                    m_option.SaveToFile(OptionFile);
+                }
+                else
                 {
                     MessageBox.Show("배경화면을 설정할 수 없습니다.", "Error!",
                         MessageBoxButtons.OK, MessageBoxIcon.Error);
-
-
+                    
                     StopWallpaper();
                 }
             }
@@ -364,7 +381,20 @@ namespace YoutubeWallpaper
             if (m_wallpaper != null)
                 m_wallpaper.Volume = m_option.Volume;
 
-            this.checkBox_isLive.Checked = m_option.IsLive;
+            switch (m_option.JobWhenOverlayed)
+            {
+                case Option.Job.Nothing:
+                    this.radioButton_nothingWhenOverlayed.Checked = true;
+                    break;
+
+                case Option.Job.Mute:
+                    this.radioButton_muteWhenOverlayed.Checked = true;
+                    break;
+
+                case Option.Job.Toggle:
+                    this.radioButton_toggleWhenOverlayed.Checked = true;
+                    break;
+            }
         }
 
         protected void LoadOption()
@@ -401,10 +431,24 @@ namespace YoutubeWallpaper
 
             m_option.Volume = this.trackBar_volume.Value;
 
-            m_option.IsLive = this.checkBox_isLive.Checked;
+            if (this.radioButton_nothingWhenOverlayed.Checked)
+                m_option.JobWhenOverlayed = Option.Job.Nothing;
+            else if (this.radioButton_muteWhenOverlayed.Checked)
+                m_option.JobWhenOverlayed = Option.Job.Mute;
+            else if (this.radioButton_toggleWhenOverlayed.Checked)
+                m_option.JobWhenOverlayed = Option.Job.Toggle;
 
 
             m_option.SaveToFile(OptionFile);
+        }
+
+        protected void SetOverlayJob(Option.Job job)
+        {
+            if (m_wallpaper != null)
+            {
+                m_wallpaper.AutoMute = (job == Option.Job.Mute);
+                m_wallpaper.AutoTogglePlay = (job == Option.Job.Toggle);
+            }
         }
 
         //#########################################################################################################
@@ -506,6 +550,11 @@ namespace YoutubeWallpaper
             ShowTouchPad();
         }
 
+        private void toolStripMenuItem_togglePlayWallpaper_Click(object sender, EventArgs e)
+        {
+            TogglePlayWallpaper();
+        }
+
         private void ToolStripMenuItem_stopWallpaper_Click(object sender, EventArgs e)
         {
             StopWallpaper();
@@ -552,6 +601,11 @@ namespace YoutubeWallpaper
             ShowTouchPad();
         }
 
+        private void ToolStripMenuItem_togglePlayWallpaperInTray_Click(object sender, EventArgs e)
+        {
+            TogglePlayWallpaper();
+        }
+
         private void ToolStripMenuItem_stopWallpaperInTray_Click(object sender, EventArgs e)
         {
             StopWallpaper();
@@ -578,15 +632,27 @@ namespace YoutubeWallpaper
         }
 
         //#########################################################################################################
-
-        private void radioButton_type_one_CheckedChanged(object sender, EventArgs e)
-        {
-            this.checkBox_isLive.Enabled = this.radioButton_type_one.Checked;
-        }
-
+        
         private void textBox_id_TextChanged(object sender, EventArgs e)
         {
             ApplyOptionFromYoutubeUrl(this.textBox_id.Text);
+        }
+
+        //#########################################################################################################
+
+        private void radioButton_nothingWhenOverlayed_CheckedChanged(object sender, EventArgs e)
+        {
+            SetOverlayJob(Option.Job.Nothing);
+        }
+
+        private void radioButton_muteWhenOverlayed_CheckedChanged(object sender, EventArgs e)
+        {
+            SetOverlayJob(Option.Job.Mute);
+        }
+
+        private void radioButton_toggleWhenOverlayed_CheckedChanged(object sender, EventArgs e)
+        {
+            SetOverlayJob(Option.Job.Toggle);
         }
     }
 }

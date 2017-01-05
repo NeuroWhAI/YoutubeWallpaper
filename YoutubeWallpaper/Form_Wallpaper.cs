@@ -19,6 +19,19 @@ namespace YoutubeWallpaper
             InitializeComponent();
 
 
+            // 문서(동영상)로드가 완료되면 플래시의 핸들을 찾도록 함.
+            this.webBrowser_page.DocumentCompleted += ((_s, _e) => UpdatePlayerHandle());
+
+            // 파일 다운로드 창이 뜨지 않도록 함.
+            (this.webBrowser_page.ActiveXInstance as SHDocVw.ShellBrowserWindow).FileDownload += (bool activeDoc, ref bool doCancel) =>
+            {
+                if (!activeDoc)
+                {
+                    doCancel = true;
+                }
+            };
+
+
             OwnerScreenIndex = ownerScreenIndex;
 
 
@@ -27,21 +40,20 @@ namespace YoutubeWallpaper
 
         //#############################################################################################
 
-        protected bool m_isFixed = false;
+        private bool m_isFixed = false;
         public bool IsFixed
         { get { return m_isFixed; } }
-
+        
         public string Uri
         {
             get { return this.webBrowser_page.Url.ToString(); }
             set
             {
                 this.webBrowser_page.Navigate(value);
-
-                UpdatePlayerHandle();
             }
         }
 
+        private int m_latestVolume = 100;
         public int Volume
         {
             get
@@ -52,13 +64,15 @@ namespace YoutubeWallpaper
             }
             set
             {
+                m_latestVolume = value;
+
                 uint vol = (uint)((double)0xFFFF * value / 100) & 0xFFFF;
                 WinApi.waveOutSetVolume(IntPtr.Zero, (vol << 16) | vol);
             }
         }
 
-        protected IntPtr m_playerHandle = IntPtr.Zero;
-        protected IntPtr PlayerHandle
+        private IntPtr m_playerHandle = IntPtr.Zero;
+        private IntPtr PlayerHandle
         {
             get
             {
@@ -98,12 +112,20 @@ namespace YoutubeWallpaper
             }
         }
 
-        protected Task m_checkParent = null;
-        protected bool m_onRunning = false;
-        protected EventWaitHandle m_waitHandle = null;
+        public bool AutoMute
+        { get; set; } = false;
 
-        protected readonly object m_lockFlag = new object();
-        protected bool m_needUpdate = false;
+        public bool AutoTogglePlay
+        { get; set; } = true;
+
+        private Task m_checkParent = null;
+        private bool m_onRunning = false;
+        private EventWaitHandle m_waitHandle = null;
+
+        private readonly object m_lockFlag = new object();
+        private bool m_needUpdate = false;
+
+        private bool m_wasOverlayed = false;
 
         //#############################################################################################
 
@@ -144,12 +166,16 @@ namespace YoutubeWallpaper
                     WinApi.SendMessageTimeoutFlags.SMTO_NORMAL, 0, out result);
 
                 // 두번째 클릭에서 실제로 클릭이 처리되게 하게끔 함.
-
                 WinApi.SendMessageTimeout(flash, 0x201/*DOWN*/, new IntPtr(1), new IntPtr(WinApi.MakeParam(y, x)),
                         WinApi.SendMessageTimeoutFlags.SMTO_NORMAL, 0, out result);
                 WinApi.SendMessageTimeout(flash, 0x202/*UP*/, new IntPtr(1), new IntPtr(WinApi.MakeParam(y, x)),
                     WinApi.SendMessageTimeoutFlags.SMTO_NORMAL, 0, out result);
             }
+        }
+
+        public void TogglePlay()
+        {
+            PerformClickWallpaper(this.Width / 2, this.Height / 2);
         }
 
         protected bool PinToBackground()
@@ -263,6 +289,44 @@ namespace YoutubeWallpaper
             if (needUpdate)
             {
                 PinToBackground();
+            }
+
+
+            // 배경이 다른 프로그램에 의해 가려졌고
+            if (ScreenUtility.IsOverlayed(this))
+            {
+                // 이번이 처음으로 가려진거면
+                if (m_wasOverlayed == false)
+                {
+                    m_wasOverlayed = true;
+
+                    if (this.AutoMute)
+                    {
+                        // 음소거
+                        WinApi.waveOutSetVolume(IntPtr.Zero, 0);
+                    }
+
+                    if (this.AutoTogglePlay)
+                    {
+                        // 일시정지
+                        TogglePlay();
+                    }
+                }
+            }
+            else if (m_wasOverlayed)
+            {
+                // 가려지지 않았고 이전에 가려진적이 있었으면
+
+                m_wasOverlayed = false;
+
+                // 볼륨 복구
+                this.Volume = m_latestVolume;
+
+                if (this.AutoTogglePlay)
+                {
+                    // 재생
+                    TogglePlay();
+                }
             }
         }
     }
