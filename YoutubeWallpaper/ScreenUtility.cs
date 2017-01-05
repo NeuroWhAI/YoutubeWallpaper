@@ -66,7 +66,7 @@ namespace YoutubeWallpaper
             else
             {
                 var info = new WinApi.MONITORINFO();
-                info.cbSize = System.Runtime.InteropServices.Marshal.SizeOf(info);
+                info.cbSize = sizeof(int) * 4 * 2 + sizeof(int) * 2;
                 if (WinApi.GetMonitorInfo(monitor, ref info) == false)
                     return false;
 
