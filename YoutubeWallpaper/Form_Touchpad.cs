@@ -29,7 +29,7 @@ namespace YoutubeWallpaper
 
                 if (value != null)
                 {
-                    var size = value.OwnerScreen.Bounds.Size;
+                    var size = value.OwnerScreen.rcMonitor.Size;
                     this.ClientSize = new Size(size.Width / 4, size.Height / 4);
                 }
             }

@@ -102,13 +102,17 @@ namespace YoutubeWallpaper
                 }
             }
         }
-        public Screen OwnerScreen
+        public WinApi.MONITORINFO OwnerScreen
         {
             get
             {
-                if (OwnerScreenIndex < Screen.AllScreens.Length)
-                    return Screen.AllScreens[OwnerScreenIndex];
-                return Screen.PrimaryScreen;
+                if (OwnerScreenIndex < ScreenUtility.Screens.Length)
+                    return ScreenUtility.Screens[OwnerScreenIndex];
+                return new WinApi.MONITORINFO()
+                {
+                    rcMonitor = Screen.PrimaryScreen.Bounds,
+                    rcWork = Screen.PrimaryScreen.WorkingArea,
+                };
             }
         }
 
@@ -243,6 +247,12 @@ namespace YoutubeWallpaper
             SystemEvents.DisplaySettingsChanged += SystemEvents_DisplaySettingsChanged;
 
 
+            // 생성자에서 배경에 고정되었을테니 DPI의 영향에서 벗어난다.
+            // 이때 모니터 정보들을 다시 구하면 DPI의 영향을 받지 않는 해상도가 나온다.
+            ScreenUtility.Initialize();
+
+
+            // 그렇게 구해진 올바른 해상도로 다시 배경에 고정한다.
             if (PinToBackground())
             {
                 m_waitHandle = new EventWaitHandle(false, EventResetMode.ManualReset);

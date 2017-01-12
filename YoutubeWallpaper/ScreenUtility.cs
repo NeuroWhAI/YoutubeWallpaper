@@ -10,10 +10,75 @@ namespace YoutubeWallpaper
 {
     public static class ScreenUtility
     {
-        public static void FillScreen(Form form, Screen screen)
+        static ScreenUtility()
         {
-            form.Location = screen.Bounds.Location;
-            form.Size = screen.Bounds.Size;
+            Initialize();
+        }
+
+        //#################################################################################################################
+
+        private static WinApi.RECT s_combinedRect;
+
+        public static WinApi.MONITORINFO[] Screens
+        { get; private set; }
+
+        //#################################################################################################################
+
+        public static void Initialize()
+        {
+            s_combinedRect = new WinApi.RECT(0, 0, 0, 0);
+
+            List<WinApi.MONITORINFO> screens = new List<WinApi.MONITORINFO>();
+
+            WinApi.MonitorEnumDelegate callback = (IntPtr hDesktop, IntPtr hdc, ref WinApi.RECT pRect, int d) =>
+            {
+                var info = new WinApi.MONITORINFO();
+                info.cbSize = sizeof(int) * 4 * 2 + sizeof(int) * 2;
+                if (WinApi.GetMonitorInfo(hDesktop, ref info) == false)
+                    return false;
+
+                var rect = info.rcMonitor;
+                if (rect.Left < s_combinedRect.Left)
+                    s_combinedRect.Left = rect.Left;
+                if (rect.Top < s_combinedRect.Top)
+                    s_combinedRect.Top = rect.Top;
+                if (rect.Right > s_combinedRect.Right)
+                    rect.Right = s_combinedRect.Right;
+                if (rect.Bottom > s_combinedRect.Bottom)
+                    rect.Bottom = s_combinedRect.Bottom;
+
+                screens.Add(info);
+
+                return true;
+            };
+
+            if (WinApi.EnumDisplayMonitors(IntPtr.Zero, IntPtr.Zero, callback, 0))
+            {
+                Screens = screens.ToArray();
+            }
+            else
+            {
+                Screens = new[]
+                {
+                    new WinApi.MONITORINFO()
+                    {
+                        rcMonitor = Screen.PrimaryScreen.Bounds,
+                        rcWork = Screen.PrimaryScreen.WorkingArea,
+                    }
+                };
+            }
+        }
+
+        //#################################################################################################################
+
+        public static void FillScreen(Form form, WinApi.MONITORINFO screen)
+        {
+            var rect = screen.rcMonitor;
+
+            int x = rect.Left - s_combinedRect.Left;
+            int y = rect.Top - s_combinedRect.Top;
+
+            WinApi.MoveWindow(form.Handle, x, y, rect.Width, rect.Height, false);
         }
 
         public static bool IsOverlayed(Form form)

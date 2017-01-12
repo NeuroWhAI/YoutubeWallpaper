@@ -178,6 +178,17 @@ namespace YoutubeWallpaper
             public uint dwFlags;
         }
 
+        public delegate bool MonitorEnumDelegate(IntPtr hMonitor, IntPtr hdcMonitor, ref RECT lprcMonitor, int dwData);
+
+        public class DisplayInfo
+        {
+            public string Availability { get; set; }
+            public string ScreenHeight { get; set; }
+            public string ScreenWidth { get; set; }
+            public RECT MonitorArea { get; set; }
+            public RECT WorkArea { get; set; }
+        }
+
         [DllImport("user32.dll", SetLastError = true)]
         public static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
 
@@ -291,5 +302,11 @@ namespace YoutubeWallpaper
 
         [DllImport("user32.dll")]
         public static extern bool GetClientRect(IntPtr hWnd, out RECT lpRect); // hWnd의 작업영역을 얻어옵니다.
+
+        [DllImport("user32.dll")]
+        public static extern bool EnumDisplayMonitors(IntPtr hdc, IntPtr lprcClip, MonitorEnumDelegate lpfnEnum, int dwData);
+
+        [DllImport("user32.dll", SetLastError = true)]
+        public static extern bool MoveWindow(IntPtr hWnd, int X, int Y, int nWidth, int nHeight, bool bRepaint);
     }
 }
