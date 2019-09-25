@@ -1,0 +1,101 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Youtube Wallpaper</title>
+    <style>
+        body {
+            padding: 0;
+            margin: 0;
+            overflow: hidden;
+        }
+        iframe {
+            margin: 0;
+            position: absolute;
+            left: 0;
+            top: 0;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+    <div id="player"></div>
+    <script>
+        var tag = document.createElement('script');
+  
+        tag.src = "https://www.youtube.com/iframe_api";
+        var firstScriptTag = document.getElementsByTagName('script')[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+        var videoId = 'VIDEO_ID';
+        var playlistId = 'PLAYLIST_ID';
+  
+        var player;
+        function onYouTubeIframeAPIReady() {
+            var param = {
+                height: 'WALLPAPER_HEIGHT',
+                width: 'WALLPAPER_WIDTH',
+                playerVars: {
+                    'autoplay': 1,
+                    'loop': 1,
+                    'controls': 0,
+                    'modestbranding': 1,
+                    'rel': 0,
+                    'iv_load_policy': 3,
+                    'playsinline': 0,
+                    'cc_load_policy': 0,
+                    'version': 3,
+                },
+                events: {
+                    'onReady': onPlayerReady,
+                    'onStateChange': onPlayerStateChange,
+                }
+            };
+
+            if (videoId) {
+                param['videoId'] = videoId;
+                param.playerVars['playlist'] = videoId;
+            }
+
+            player = new YT.Player('player', param);
+        }
+
+        function onPlayerReady(e) {
+            if (playlistId) {
+                player.loadPlaylist({
+                    'list': playlistId,
+                    'listType': 'playlist',
+                    'index': 0,
+                    'startSeconds': 0,
+                    'suggestedQuality': 'default'
+                });
+            }
+        }
+
+        var prevIndex = -1;
+        function onPlayerStateChange(e) {
+            if (playlistId && e.data === YT.PlayerState.ENDED) {
+                var index = player.getPlaylistIndex();
+
+                if (index === prevIndex) {
+                    prevIndex = -1;
+                    player.playVideoAt(0);
+                }
+                else {
+                    prevIndex = index;
+                }
+            }
+        }
+
+        function playVideo() {
+            player.playVideo();
+        }
+
+        function pauseVideo() {
+            player.pauseVideo();
+        }
+    </script>
+</body>
+</html>

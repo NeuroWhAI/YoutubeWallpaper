@@ -30,34 +30,8 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form_Wallpaper));
-            this.webBrowser_page = new System.Windows.Forms.WebBrowser();
-            this.panel_cursor = new System.Windows.Forms.Panel();
             this.timer_check = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
-            // 
-            // webBrowser_page
-            // 
-            this.webBrowser_page.AllowWebBrowserDrop = false;
-            this.webBrowser_page.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.webBrowser_page.Location = new System.Drawing.Point(0, 0);
-            this.webBrowser_page.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.webBrowser_page.MinimumSize = new System.Drawing.Size(18, 16);
-            this.webBrowser_page.Name = "webBrowser_page";
-            this.webBrowser_page.ScrollBarsEnabled = false;
-            this.webBrowser_page.Size = new System.Drawing.Size(521, 317);
-            this.webBrowser_page.TabIndex = 0;
-            this.webBrowser_page.Url = new System.Uri("", System.UriKind.Relative);
-            this.webBrowser_page.WebBrowserShortcutsEnabled = false;
-            // 
-            // panel_cursor
-            // 
-            this.panel_cursor.BackColor = System.Drawing.SystemColors.Highlight;
-            this.panel_cursor.Location = new System.Drawing.Point(0, 0);
-            this.panel_cursor.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.panel_cursor.Name = "panel_cursor";
-            this.panel_cursor.Size = new System.Drawing.Size(10, 10);
-            this.panel_cursor.TabIndex = 1;
-            this.panel_cursor.Visible = false;
             // 
             // timer_check
             // 
@@ -66,11 +40,9 @@
             // 
             // Form_Wallpaper
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(521, 317);
-            this.Controls.Add(this.panel_cursor);
-            this.Controls.Add(this.webBrowser_page);
+            this.ClientSize = new System.Drawing.Size(595, 396);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
@@ -87,9 +59,6 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.WebBrowser webBrowser_page;
-        private System.Windows.Forms.Panel panel_cursor;
         private System.Windows.Forms.Timer timer_check;
     }
 }

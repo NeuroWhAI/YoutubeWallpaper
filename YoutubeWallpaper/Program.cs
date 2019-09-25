@@ -17,20 +17,6 @@ namespace YoutubeWallpaper
             System.IO.Directory.SetCurrentDirectory(Application.StartupPath);
 
 
-            // DPI 호환을 포기함.
-            try
-            {
-                if (Environment.OSVersion.Version.Major >= 6)
-                {
-                    WinApi.SetProcessDPIAware();
-                }
-            }
-            catch (EntryPointNotFoundException)
-            {
-                // OS가 해당 API를 지원하지 않으므로 무시.
-            }
-
-
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 

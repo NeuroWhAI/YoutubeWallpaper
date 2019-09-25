@@ -15,16 +15,6 @@ namespace YoutubeWallpaper
             Playlist,
         }
 
-        public enum Quality
-        {
-            p240,
-            p360,
-            p480,
-            p720,
-            p1080,
-            p1440,
-        }
-
         public enum Job
         {
             Nothing,
@@ -39,9 +29,6 @@ namespace YoutubeWallpaper
 
         public string Id
         { get; set; } = "";
-
-        public Quality VideoQuality
-        { get; set; } = Quality.p1080;
 
         /// <summary>
         /// 소리 크기
@@ -75,7 +62,6 @@ namespace YoutubeWallpaper
             {
                 bw.Write((int)IdType);
                 bw.Write(Id);
-                bw.Write((int)VideoQuality);
                 bw.Write(Volume);
                 bw.Write(ScreenIndex);
                 bw.Write(IsLive);
@@ -94,7 +80,6 @@ namespace YoutubeWallpaper
                 {
                     IdType = (Type)br.ReadInt32();
                     Id = br.ReadString();
-                    VideoQuality = (Quality)br.ReadInt32();
                     Volume = br.ReadInt32();
                     ScreenIndex = br.ReadInt32();
                     IsLive = br.ReadBoolean();

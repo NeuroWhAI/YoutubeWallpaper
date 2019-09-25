@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 using System.Threading;
 using System.Windows.Forms;
 using Microsoft.Win32;
+using CefSharp;
+using CefSharp.WinForms;
 
 namespace YoutubeWallpaper
 {
@@ -19,17 +21,10 @@ namespace YoutubeWallpaper
             InitializeComponent();
 
 
-            // 문서(동영상)로드가 완료되면 플래시의 핸들을 찾도록 함.
-            this.webBrowser_page.DocumentCompleted += ((_s, _e) => UpdatePlayerHandle());
-
-            // 파일 다운로드 창이 뜨지 않도록 함.
-            (this.webBrowser_page.ActiveXInstance as SHDocVw.ShellBrowserWindow).FileDownload += (bool activeDoc, ref bool doCancel) =>
-            {
-                if (!activeDoc)
-                {
-                    doCancel = true;
-                }
-            };
+            this.webBrowser_page = new ChromiumWebBrowser(new CefSharp.Web.HtmlString(EmptyHtml));
+            this.Controls.Add(this.webBrowser_page);
+            this.webBrowser_page.Dock = DockStyle.Fill;
+            this.webBrowser_page.FrameLoadEnd += WebBrowser_page_FrameLoadEnd;
 
 
             OwnerScreenIndex = ownerScreenIndex;
@@ -38,20 +33,56 @@ namespace YoutubeWallpaper
             PinToBackground();
         }
 
+        private void WebBrowser_page_FrameLoadEnd(object sender, FrameLoadEndEventArgs e)
+        {
+            // 바로 Load를 호출하면 작동이 안되니까
+            // 기본 시작 페이지 로드가 일부 완료되었다면 목표 URI를 Load함.
+
+            this.webBrowser_page.FrameLoadEnd -= WebBrowser_page_FrameLoadEnd;
+
+            if (!string.IsNullOrEmpty(VideoId))
+            {
+                var screen = OwnerScreen.rcMonitor;
+
+                string html = Properties.Resources.Template;
+                html = html.Replace("WALLPAPER_HEIGHT", screen.Height.ToString());
+                html = html.Replace("WALLPAPER_WIDTH", screen.Width.ToString());
+
+                if (IsPlaylist)
+                {
+                    html = html.Replace("PLAYLIST_ID", VideoId);
+                    html = html.Replace("VIDEO_ID", string.Empty);
+                }
+                else
+                {
+                    html = html.Replace("PLAYLIST_ID", string.Empty);
+                    html = html.Replace("VIDEO_ID", VideoId);
+                }
+
+                this.webBrowser_page.LoadHtml(html);
+
+                Paused = false;
+            }
+        }
+
         //#############################################################################################
+
+        private readonly string EmptyHtml = "<!doctype html><html><head><title>...</title></head><body></body></html>";
+
+        private ChromiumWebBrowser webBrowser_page;
 
         private bool m_isFixed = false;
         public bool IsFixed
         { get { return m_isFixed; } }
-        
-        public string Uri
+
+        private string m_videoId;
+        public string VideoId
         {
-            get { return this.webBrowser_page.Url.ToString(); }
-            set
-            {
-                this.webBrowser_page.Navigate(value);
-            }
+            get { return m_videoId; }
+            set { m_videoId = value; }
         }
+
+        public bool IsPlaylist { get; set; } = false;
 
         private int m_latestVolume = 100;
         public int Volume
@@ -68,18 +99,6 @@ namespace YoutubeWallpaper
 
                 uint vol = (uint)((double)0xFFFF * value / 100) & 0xFFFF;
                 WinApi.waveOutSetVolume(IntPtr.Zero, (vol << 16) | vol);
-            }
-        }
-
-        private IntPtr m_playerHandle = IntPtr.Zero;
-        private IntPtr PlayerHandle
-        {
-            get
-            {
-                if (m_playerHandle != IntPtr.Zero)
-                    return m_playerHandle;
-
-                return UpdatePlayerHandle();
             }
         }
 
@@ -131,56 +150,23 @@ namespace YoutubeWallpaper
 
         private bool m_wasOverlayed = false;
 
+        public bool Paused { get; private set; } = false;
+
         //#############################################################################################
 
-        protected IntPtr UpdatePlayerHandle()
+        public void PauseVideo()
         {
-            IntPtr flash = IntPtr.Zero;
-            flash = WinApi.FindWindowEx(this.webBrowser_page.Handle, IntPtr.Zero, "Shell Embedding", IntPtr.Zero);
-            flash = WinApi.FindWindowEx(flash, IntPtr.Zero, "Shell DocObject View", IntPtr.Zero);
-            flash = WinApi.FindWindowEx(flash, IntPtr.Zero, "Internet Explorer_Server", IntPtr.Zero);
-            flash = WinApi.FindWindowEx(flash, IntPtr.Zero, "MacromediaFlashPlayerActiveX", IntPtr.Zero);
-
-            m_playerHandle = flash;
-
-
-            return flash;
+            this.webBrowser_page.ExecuteScriptAsync("pauseVideo", new object[] { });
+            Paused = true;
         }
 
-        public void ShowCursor(bool bShow)
+        public void PlayVideo()
         {
-            this.panel_cursor.Visible = bShow;
+            this.webBrowser_page.ExecuteScriptAsync("playVideo", new object[] { });
+            Paused = false;
         }
 
-        public void MoveCursor(int x, int y)
-        {
-            this.panel_cursor.Location = new Point(x - this.panel_cursor.Width / 2,
-                y - this.panel_cursor.Height / 2);
-        }
-
-        public void PerformClickWallpaper(int x, int y)
-        {
-            IntPtr flash = this.PlayerHandle;
-            if (flash != IntPtr.Zero)
-            {
-                IntPtr result = IntPtr.Zero;
-
-                // 첫번째 이벤트에서 포커스를 잠깐 얻고
-                WinApi.SendMessageTimeout(flash, 0x202/*UP*/, new IntPtr(1), new IntPtr(WinApi.MakeParam(y, x)),
-                    WinApi.SendMessageTimeoutFlags.SMTO_NORMAL, 0, out result);
-
-                // 두번째 클릭에서 실제로 클릭이 처리되게 하게끔 함.
-                WinApi.SendMessageTimeout(flash, 0x201/*DOWN*/, new IntPtr(1), new IntPtr(WinApi.MakeParam(y, x)),
-                        WinApi.SendMessageTimeoutFlags.SMTO_NORMAL, 0, out result);
-                WinApi.SendMessageTimeout(flash, 0x202/*UP*/, new IntPtr(1), new IntPtr(WinApi.MakeParam(y, x)),
-                    WinApi.SendMessageTimeoutFlags.SMTO_NORMAL, 0, out result);
-            }
-        }
-
-        public void TogglePlay()
-        {
-            PerformClickWallpaper(this.Width / 2, this.Height / 2);
-        }
+        //#############################################################################################
 
         protected bool PinToBackground()
         {
@@ -285,6 +271,9 @@ namespace YoutubeWallpaper
 
                 m_waitHandle.Dispose();
             }
+
+
+            this.webBrowser_page.LoadHtml(EmptyHtml);
         }
 
         private void timer_check_Tick(object sender, EventArgs e)
@@ -319,7 +308,7 @@ namespace YoutubeWallpaper
                     if (this.AutoTogglePlay)
                     {
                         // 일시정지
-                        TogglePlay();
+                        PauseVideo();
                     }
                 }
             }
@@ -335,7 +324,7 @@ namespace YoutubeWallpaper
                 if (this.AutoTogglePlay)
                 {
                     // 재생
-                    TogglePlay();
+                    PlayVideo();
                 }
             }
         }

@@ -8,9 +8,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
-using Microsoft.Win32;
 using System.Net;
 using System.Diagnostics;
+using Microsoft.Win32;
+using CefSharp;
+using CefSharp.WinForms;
 
 namespace YoutubeWallpaper
 {
@@ -29,8 +31,6 @@ namespace YoutubeWallpaper
         protected Option m_option = new Option();
 
         protected Form_Wallpaper m_wallpaper = null;
-
-        protected Form_Touchpad m_touchpad = null;
 
         protected bool m_wasAero = true;
 
@@ -85,7 +85,7 @@ namespace YoutubeWallpaper
                             if (MessageBox.Show(message, "Update",
                                 MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
                             {
-                                Process.Start(@"http://blog.naver.com/neurowhai/220810470139");
+                                Process.Start(@"https://neurowhai.tistory.com/370");
 
 
                                 Application.Exit();
@@ -134,22 +134,6 @@ namespace YoutubeWallpaper
             this.Show();
         }
 
-        protected void ShowTouchPad()
-        {
-            if (m_touchpad == null || m_touchpad.IsDisposed)
-            {
-                m_touchpad = new Form_Touchpad();
-                m_touchpad.Show();
-            }
-            else
-            {
-                m_touchpad.WindowState = FormWindowState.Normal;
-                m_touchpad.Activate();
-            }
-
-            m_touchpad.Target = m_wallpaper;
-        }
-
         //#########################################################################################################
 
         protected void PlayWallpaper()
@@ -160,74 +144,16 @@ namespace YoutubeWallpaper
             StopWallpaper();
 
 
-            StringBuilder url = new StringBuilder(@"https://www.youtube.com/");
-
-            if (m_option.IdType == Option.Type.OneVideo)
-            {
-                url.Append(@"v/");
-                url.Append(m_option.Id);
-                url.Append(@"?playlist=");
-                url.Append(m_option.Id);
-            }
-            else if (m_option.IdType == Option.Type.Playlist)
-            {
-                // embed 태그가 원하는대로 작동하지 않으니 v 태그를 사용하되
-                // 아주 짧은 영상(Q3HPz3h-_AE)을 먼저 재생하고 자동으로 다음에 재생될 영상을
-                // 유저가 설정한 재생목록으로 해두면 v 태그로 재생목록도 재생 가능!
-                url.Append(@"v/Q3HPz3h-_AE?listType=playlist&index=0&list=");
-                url.Append(m_option.Id);
-            }
-
-            // TODO: controls를 1로 하면 귀찮더라도 이전/다음 영상으로 넘어가는 조작이 가능함.
-            url.Append(@"&autoplay=1&loop=1&controls=0&showinfo=0&autohide=1&modestbranding=1&rel=0&iv_load_policy=3&playsinline=0&cc_load_policy=0&version=3");
-
-            url.Append("&vq=");
-
-            string quality = "";
-            switch (m_option.VideoQuality)
-            {
-                case Option.Quality.p240:
-                    quality = "small";
-                    break;
-
-                case Option.Quality.p360:
-                    quality = "medium";
-                    break;
-
-                case Option.Quality.p480:
-                    quality = "large";
-                    break;
-
-                case Option.Quality.p720:
-                    quality = "hd720";
-                    break;
-
-                case Option.Quality.p1080:
-                    quality = "hd1080";
-                    break;
-
-                case Option.Quality.p1440:
-                    quality = "hd1440";
-                    break;
-            }
-
-            url.Append(quality);
-
-
             m_wallpaper = new Form_Wallpaper(m_option.ScreenIndex);
             m_wallpaper.Volume = m_option.Volume;
             SetOverlayJob(m_option.JobWhenOverlayed);
             m_wallpaper.Show();
 
 
-            if (m_touchpad != null)
-            {
-                m_touchpad.Target = m_wallpaper;
-            }
-
             if (m_wallpaper.IsFixed)
             {
-                m_wallpaper.Uri = url.ToString();
+                m_wallpaper.IsPlaylist = (m_option.IdType == Option.Type.Playlist);
+                m_wallpaper.VideoId = m_option.Id;
             }
             else
             {
@@ -238,24 +164,18 @@ namespace YoutubeWallpaper
             }
         }
 
-        protected void TogglePlayWallpaper()
+        protected void ToggleWallpaper()
         {
             if (m_wallpaper != null)
             {
-                m_wallpaper.TogglePlay();
-
-                // 안하면 월페이퍼가 포커스를 가져서 조작이 이상해짐.
-                this.Select();
-            }
-        }
-
-        protected void StopWallpaper()
-        {
-            if (m_wallpaper != null)
-            {
-                m_wallpaper.Close();
-                m_wallpaper.Dispose();
-                m_wallpaper = null;
+                if (m_wallpaper.Paused)
+                {
+                    m_wallpaper.PlayVideo();
+                }
+                else
+                {
+                    m_wallpaper.PauseVideo();
+                }
             }
         }
 
@@ -293,6 +213,16 @@ namespace YoutubeWallpaper
             }
         }
 
+        protected void StopWallpaper()
+        {
+            if (m_wallpaper != null)
+            {
+                m_wallpaper.Close();
+                m_wallpaper.Dispose();
+                m_wallpaper = null;
+            }
+        }
+
         //#########################################################################################################
 
         protected string GetValueInUrl(string url, string valueName)
@@ -318,6 +248,11 @@ namespace YoutubeWallpaper
 
         protected void ApplyOptionFromYoutubeUrl(string url)
         {
+            if (!url.StartsWith("http"))
+            {
+                return;
+            }
+
             string listId = GetValueInUrl(url, "list=");
             if (string.IsNullOrEmpty(listId) == false)
             {
@@ -349,33 +284,6 @@ namespace YoutubeWallpaper
             }
 
             this.textBox_id.Text = m_option.Id;
-
-            switch (m_option.VideoQuality)
-            {
-                case Option.Quality.p240:
-                    this.radioButton_q_small.Checked = true;
-                    break;
-
-                case Option.Quality.p360:
-                    this.radioButton_q_medium.Checked = true;
-                    break;
-
-                case Option.Quality.p480:
-                    this.radioButton_q_large.Checked = true;
-                    break;
-
-                case Option.Quality.p720:
-                    this.radioButton_q_720.Checked = true;
-                    break;
-
-                case Option.Quality.p1080:
-                    this.radioButton_q_1080.Checked = true;
-                    break;
-
-                case Option.Quality.p1440:
-                    this.radioButton_q_1440.Checked = true;
-                    break;
-            }
 
             this.trackBar_volume.Value = m_option.Volume;
             if (m_wallpaper != null)
@@ -416,19 +324,6 @@ namespace YoutubeWallpaper
 
             m_option.Id = this.textBox_id.Text;
 
-            if (this.radioButton_q_small.Checked)
-                m_option.VideoQuality = Option.Quality.p240;
-            else if (this.radioButton_q_medium.Checked)
-                m_option.VideoQuality = Option.Quality.p480;
-            else if (this.radioButton_q_large.Checked)
-                m_option.VideoQuality = Option.Quality.p720;
-            else if (this.radioButton_q_720.Checked)
-                m_option.VideoQuality = Option.Quality.p720;
-            else if (this.radioButton_q_1080.Checked)
-                m_option.VideoQuality = Option.Quality.p1080;
-            else if (this.radioButton_q_1440.Checked)
-                m_option.VideoQuality = Option.Quality.p1440;
-
             m_option.Volume = this.trackBar_volume.Value;
 
             if (this.radioButton_nothingWhenOverlayed.Checked)
@@ -455,6 +350,12 @@ namespace YoutubeWallpaper
 
         private void Form_Main_Load(object sender, EventArgs e)
         {
+            var cefSettings = new CefSettings();
+            cefSettings.CefCommandLineArgs["autoplay-policy"] = "no-user-gesture-required";
+
+            Cef.Initialize(cefSettings);
+
+
             ApplyAeroPeek();
 
 
@@ -489,7 +390,13 @@ namespace YoutubeWallpaper
 
         private void Form_Main_FormClosed(object sender, FormClosedEventArgs e)
         {
+            StopWallpaper();
+
+
             RestoreAeroPeek();
+
+
+            Cef.Shutdown();
 
 
             this.notifyIcon_tray.Visible = false;
@@ -545,19 +452,9 @@ namespace YoutubeWallpaper
 
         //#########################################################################################################
 
-        private void ToolStripMenuItem_openTouchpad_Click(object sender, EventArgs e)
+        private void ToolStripMenuItem_toggleWallpaper_Click(object sender, EventArgs e)
         {
-            ShowTouchPad();
-        }
-
-        private void toolStripMenuItem_togglePlayWallpaper_Click(object sender, EventArgs e)
-        {
-            TogglePlayWallpaper();
-        }
-
-        private void ToolStripMenuItem_stopWallpaper_Click(object sender, EventArgs e)
-        {
-            StopWallpaper();
+            ToggleWallpaper();
         }
 
         private void ToolStripMenuItem_mute_Click(object sender, EventArgs e)
@@ -570,11 +467,16 @@ namespace YoutubeWallpaper
             NextScreen();
         }
 
+        private void ToolStripMenuItem_stopWallpaper_Click(object sender, EventArgs e)
+        {
+            StopWallpaper();
+        }
+
         //#########################################################################################################
 
         private void ToolStripMenuItem_openBlog_Click(object sender, EventArgs e)
         {
-            Process.Start(@"http://blog.naver.com/neurowhai/220810470139");
+            Process.Start(@"https://neurowhai.tistory.com/370");
         }
 
         //#########################################################################################################
@@ -596,24 +498,19 @@ namespace YoutubeWallpaper
             ShowController();
         }
 
-        private void ToolStripMenuItem_openTouchpadInTray_Click(object sender, EventArgs e)
+        private void ToolStripMenuItem_toggleWallpaperInTray_Click(object sender, EventArgs e)
         {
-            ShowTouchPad();
-        }
-
-        private void ToolStripMenuItem_togglePlayWallpaperInTray_Click(object sender, EventArgs e)
-        {
-            TogglePlayWallpaper();
-        }
-
-        private void ToolStripMenuItem_stopWallpaperInTray_Click(object sender, EventArgs e)
-        {
-            StopWallpaper();
+            ToggleWallpaper();
         }
 
         private void ToolStripMenuItem_muteInTray_Click(object sender, EventArgs e)
         {
             MuteWallpaper();
+        }
+
+        private void ToolStripMenuItem_stopWallpaperInTray_Click(object sender, EventArgs e)
+        {
+            StopWallpaper();
         }
 
         private void ToolStripMenuItem_exitInTray_Click(object sender, EventArgs e)
