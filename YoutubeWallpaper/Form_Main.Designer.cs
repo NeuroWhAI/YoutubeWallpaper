@@ -37,22 +37,24 @@
             this.textBox_id = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.button_apply = new System.Windows.Forms.Button();
-            this.button_restore = new System.Windows.Forms.Button();
+            this.button_save = new System.Windows.Forms.Button();
             this.menuStrip_top = new System.Windows.Forms.MenuStrip();
             this.programToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ToolStripMenuItem_startup = new System.Windows.Forms.ToolStripMenuItem();
             this.ToolStripMenuItem_hideController = new System.Windows.Forms.ToolStripMenuItem();
             this.ToolStripMenuItem_exit = new System.Windows.Forms.ToolStripMenuItem();
             this.wallpaperToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.ToolStripMenuItem_stopWallpaper = new System.Windows.Forms.ToolStripMenuItem();
+            this.ToolStripMenuItem_toggleWallpaper = new System.Windows.Forms.ToolStripMenuItem();
             this.ToolStripMenuItem_mute = new System.Windows.Forms.ToolStripMenuItem();
             this.ToolStripMenuItem_nextScreen = new System.Windows.Forms.ToolStripMenuItem();
+            this.ToolStripMenuItem_stopWallpaper = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ToolStripMenuItem_openBlog = new System.Windows.Forms.ToolStripMenuItem();
             this.notifyIcon_tray = new System.Windows.Forms.NotifyIcon(this.components);
             this.contextMenuStrip_tray = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.ToolStripMenuItem_openController = new System.Windows.Forms.ToolStripMenuItem();
             this.ToolStripMenuItem_stopWallpaperInTray = new System.Windows.Forms.ToolStripMenuItem();
+            this.ToolStripMenuItem_toggleWallpaperInTray = new System.Windows.Forms.ToolStripMenuItem();
             this.ToolStripMenuItem_muteInTray = new System.Windows.Forms.ToolStripMenuItem();
             this.ToolStripMenuItem_exitInTray = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
@@ -62,8 +64,6 @@
             this.radioButton_toggleWhenOverlayed = new System.Windows.Forms.RadioButton();
             this.radioButton_muteWhenOverlayed = new System.Windows.Forms.RadioButton();
             this.radioButton_nothingWhenOverlayed = new System.Windows.Forms.RadioButton();
-            this.ToolStripMenuItem_toggleWallpaper = new System.Windows.Forms.ToolStripMenuItem();
-            this.ToolStripMenuItem_toggleWallpaperInTray = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.menuStrip_top.SuspendLayout();
@@ -152,22 +152,22 @@
             this.button_apply.Name = "button_apply";
             this.button_apply.Size = new System.Drawing.Size(149, 38);
             this.button_apply.TabIndex = 4;
-            this.button_apply.Text = "Save and Start";
+            this.button_apply.Text = "Start";
             this.toolTip_help.SetToolTip(this.button_apply, "설정을 저장하고 플레이어를 실행시킵니다.");
             this.button_apply.UseVisualStyleBackColor = true;
             this.button_apply.Click += new System.EventHandler(this.button_apply_Click);
             // 
-            // button_restore
+            // button_save
             // 
-            this.button_restore.Location = new System.Drawing.Point(174, 324);
-            this.button_restore.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.button_restore.Name = "button_restore";
-            this.button_restore.Size = new System.Drawing.Size(149, 38);
-            this.button_restore.TabIndex = 5;
-            this.button_restore.Text = "Restore option";
-            this.toolTip_help.SetToolTip(this.button_restore, "옵션을 저장하기 전으로 되돌립니다.");
-            this.button_restore.UseVisualStyleBackColor = true;
-            this.button_restore.Click += new System.EventHandler(this.button_restore_Click);
+            this.button_save.Location = new System.Drawing.Point(174, 324);
+            this.button_save.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.button_save.Name = "button_save";
+            this.button_save.Size = new System.Drawing.Size(149, 38);
+            this.button_save.TabIndex = 5;
+            this.button_save.Text = "Save";
+            this.toolTip_help.SetToolTip(this.button_save, "옵션을 저장하기 전으로 되돌립니다.");
+            this.button_save.UseVisualStyleBackColor = true;
+            this.button_save.Click += new System.EventHandler(this.button_save_Click);
             // 
             // menuStrip_top
             // 
@@ -225,12 +225,12 @@
             this.wallpaperToolStripMenuItem.Size = new System.Drawing.Size(90, 24);
             this.wallpaperToolStripMenuItem.Text = "Wallpaper";
             // 
-            // ToolStripMenuItem_stopWallpaper
+            // ToolStripMenuItem_toggleWallpaper
             // 
-            this.ToolStripMenuItem_stopWallpaper.Name = "ToolStripMenuItem_stopWallpaper";
-            this.ToolStripMenuItem_stopWallpaper.Size = new System.Drawing.Size(236, 26);
-            this.ToolStripMenuItem_stopWallpaper.Text = "Close";
-            this.ToolStripMenuItem_stopWallpaper.Click += new System.EventHandler(this.ToolStripMenuItem_stopWallpaper_Click);
+            this.ToolStripMenuItem_toggleWallpaper.Name = "ToolStripMenuItem_toggleWallpaper";
+            this.ToolStripMenuItem_toggleWallpaper.Size = new System.Drawing.Size(236, 26);
+            this.ToolStripMenuItem_toggleWallpaper.Text = "Toggle";
+            this.ToolStripMenuItem_toggleWallpaper.Click += new System.EventHandler(this.ToolStripMenuItem_toggleWallpaper_Click);
             // 
             // ToolStripMenuItem_mute
             // 
@@ -245,6 +245,13 @@
             this.ToolStripMenuItem_nextScreen.Size = new System.Drawing.Size(236, 26);
             this.ToolStripMenuItem_nextScreen.Text = "Place on next monitor";
             this.ToolStripMenuItem_nextScreen.Click += new System.EventHandler(this.ToolStripMenuItem_nextScreen_Click);
+            // 
+            // ToolStripMenuItem_stopWallpaper
+            // 
+            this.ToolStripMenuItem_stopWallpaper.Name = "ToolStripMenuItem_stopWallpaper";
+            this.ToolStripMenuItem_stopWallpaper.Size = new System.Drawing.Size(236, 26);
+            this.ToolStripMenuItem_stopWallpaper.Text = "Close";
+            this.ToolStripMenuItem_stopWallpaper.Click += new System.EventHandler(this.ToolStripMenuItem_stopWallpaper_Click);
             // 
             // helpToolStripMenuItem
             // 
@@ -279,33 +286,40 @@
             this.ToolStripMenuItem_muteInTray,
             this.ToolStripMenuItem_exitInTray});
             this.contextMenuStrip_tray.Name = "contextMenuStrip_tray";
-            this.contextMenuStrip_tray.Size = new System.Drawing.Size(211, 152);
+            this.contextMenuStrip_tray.Size = new System.Drawing.Size(126, 124);
             // 
             // ToolStripMenuItem_openController
             // 
             this.ToolStripMenuItem_openController.Name = "ToolStripMenuItem_openController";
-            this.ToolStripMenuItem_openController.Size = new System.Drawing.Size(210, 24);
+            this.ToolStripMenuItem_openController.Size = new System.Drawing.Size(125, 24);
             this.ToolStripMenuItem_openController.Text = "Open";
             this.ToolStripMenuItem_openController.Click += new System.EventHandler(this.ToolStripMenuItem_openController_Click);
             // 
             // ToolStripMenuItem_stopWallpaperInTray
             // 
             this.ToolStripMenuItem_stopWallpaperInTray.Name = "ToolStripMenuItem_stopWallpaperInTray";
-            this.ToolStripMenuItem_stopWallpaperInTray.Size = new System.Drawing.Size(210, 24);
+            this.ToolStripMenuItem_stopWallpaperInTray.Size = new System.Drawing.Size(125, 24);
             this.ToolStripMenuItem_stopWallpaperInTray.Text = "Close";
             this.ToolStripMenuItem_stopWallpaperInTray.Click += new System.EventHandler(this.ToolStripMenuItem_stopWallpaperInTray_Click);
+            // 
+            // ToolStripMenuItem_toggleWallpaperInTray
+            // 
+            this.ToolStripMenuItem_toggleWallpaperInTray.Name = "ToolStripMenuItem_toggleWallpaperInTray";
+            this.ToolStripMenuItem_toggleWallpaperInTray.Size = new System.Drawing.Size(125, 24);
+            this.ToolStripMenuItem_toggleWallpaperInTray.Text = "Toggle";
+            this.ToolStripMenuItem_toggleWallpaperInTray.Click += new System.EventHandler(this.ToolStripMenuItem_toggleWallpaperInTray_Click);
             // 
             // ToolStripMenuItem_muteInTray
             // 
             this.ToolStripMenuItem_muteInTray.Name = "ToolStripMenuItem_muteInTray";
-            this.ToolStripMenuItem_muteInTray.Size = new System.Drawing.Size(210, 24);
+            this.ToolStripMenuItem_muteInTray.Size = new System.Drawing.Size(125, 24);
             this.ToolStripMenuItem_muteInTray.Text = "Mute";
             this.ToolStripMenuItem_muteInTray.Click += new System.EventHandler(this.ToolStripMenuItem_muteInTray_Click);
             // 
             // ToolStripMenuItem_exitInTray
             // 
             this.ToolStripMenuItem_exitInTray.Name = "ToolStripMenuItem_exitInTray";
-            this.ToolStripMenuItem_exitInTray.Size = new System.Drawing.Size(210, 24);
+            this.ToolStripMenuItem_exitInTray.Size = new System.Drawing.Size(125, 24);
             this.ToolStripMenuItem_exitInTray.Text = "Exit";
             this.ToolStripMenuItem_exitInTray.Click += new System.EventHandler(this.ToolStripMenuItem_exitInTray_Click);
             // 
@@ -395,20 +409,6 @@
             this.radioButton_nothingWhenOverlayed.UseVisualStyleBackColor = true;
             this.radioButton_nothingWhenOverlayed.CheckedChanged += new System.EventHandler(this.radioButton_nothingWhenOverlayed_CheckedChanged);
             // 
-            // ToolStripMenuItem_toggleWallpaper
-            // 
-            this.ToolStripMenuItem_toggleWallpaper.Name = "ToolStripMenuItem_toggleWallpaper";
-            this.ToolStripMenuItem_toggleWallpaper.Size = new System.Drawing.Size(236, 26);
-            this.ToolStripMenuItem_toggleWallpaper.Text = "Toggle";
-            this.ToolStripMenuItem_toggleWallpaper.Click += new System.EventHandler(this.ToolStripMenuItem_toggleWallpaper_Click);
-            // 
-            // ToolStripMenuItem_toggleWallpaperInTray
-            // 
-            this.ToolStripMenuItem_toggleWallpaperInTray.Name = "ToolStripMenuItem_toggleWallpaperInTray";
-            this.ToolStripMenuItem_toggleWallpaperInTray.Size = new System.Drawing.Size(210, 24);
-            this.ToolStripMenuItem_toggleWallpaperInTray.Text = "Toggle";
-            this.ToolStripMenuItem_toggleWallpaperInTray.Click += new System.EventHandler(this.ToolStripMenuItem_toggleWallpaperInTray_Click);
-            // 
             // Form_Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
@@ -416,7 +416,7 @@
             this.ClientSize = new System.Drawing.Size(335, 375);
             this.Controls.Add(this.groupBox5);
             this.Controls.Add(this.groupBox4);
-            this.Controls.Add(this.button_restore);
+            this.Controls.Add(this.button_save);
             this.Controls.Add(this.button_apply);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
@@ -457,7 +457,7 @@
         private System.Windows.Forms.TextBox textBox_id;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button button_apply;
-        private System.Windows.Forms.Button button_restore;
+        private System.Windows.Forms.Button button_save;
         private System.Windows.Forms.MenuStrip menuStrip_top;
         private System.Windows.Forms.ToolStripMenuItem programToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem_hideController;
