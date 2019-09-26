@@ -156,14 +156,20 @@ namespace YoutubeWallpaper
 
         public void PauseVideo()
         {
-            this.webBrowser_page.ExecuteScriptAsync("pauseVideo", new object[] { });
-            Paused = true;
+            if (this.webBrowser_page.CanExecuteJavascriptInMainFrame)
+            {
+                this.webBrowser_page.ExecuteScriptAsync("pauseVideo", new object[] { });
+                Paused = true;
+            }
         }
 
         public void PlayVideo()
         {
-            this.webBrowser_page.ExecuteScriptAsync("playVideo", new object[] { });
-            Paused = false;
+            if (this.webBrowser_page.CanExecuteJavascriptInMainFrame)
+            {
+                this.webBrowser_page.ExecuteScriptAsync("playVideo", new object[] { });
+                Paused = false;
+            }
         }
 
         //#############################################################################################
