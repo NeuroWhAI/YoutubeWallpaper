@@ -123,8 +123,6 @@ namespace YoutubeWallpaper
             this.Hide();
 
             this.notifyIcon_tray.Visible = true;
-
-            this.notifyIcon_tray.ShowBalloonTip(1000, "Youtube Wallpaper", "Click me to open.", ToolTipIcon.None);
         }
 
         protected void ShowController()
