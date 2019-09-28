@@ -45,10 +45,9 @@ namespace YoutubeWallpaper
         { get; set; } = 0;
 
         /// <summary>
-        /// 실시간 영상인가?
-        /// ※ 더이상 사용되지 않습니다.
+        /// 재생 목록을 랜덤하게 섞는가?
         /// </summary>
-        public bool IsLive
+        public bool Shuffle
         { get; set; } = false;
 
         public Job JobWhenOverlayed
@@ -64,7 +63,7 @@ namespace YoutubeWallpaper
                 bw.Write(Id);
                 bw.Write(Volume);
                 bw.Write(ScreenIndex);
-                bw.Write(IsLive);
+                bw.Write(Shuffle);
                 bw.Write((int)JobWhenOverlayed);
 
 
@@ -82,7 +81,7 @@ namespace YoutubeWallpaper
                     Id = br.ReadString();
                     Volume = br.ReadInt32();
                     ScreenIndex = br.ReadInt32();
-                    IsLive = br.ReadBoolean();
+                    Shuffle = br.ReadBoolean();
                     JobWhenOverlayed = (Job)br.ReadInt32();
                 }
                 catch (EndOfStreamException)

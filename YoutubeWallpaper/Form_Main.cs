@@ -145,6 +145,7 @@ namespace YoutubeWallpaper
 
 
             m_wallpaper = new Form_Wallpaper(m_option.ScreenIndex);
+            m_wallpaper.Shuffle = m_option.Shuffle;
             m_wallpaper.Volume = m_option.Volume;
             SetOverlayJob(m_option.JobWhenOverlayed);
             m_wallpaper.Show();
@@ -283,6 +284,8 @@ namespace YoutubeWallpaper
                     break;
             }
 
+            this.checkBox_shuffle.Checked = m_option.Shuffle;
+
             this.textBox_id.Text = m_option.Id;
 
             this.trackBar_volume.Value = m_option.Volume;
@@ -321,6 +324,8 @@ namespace YoutubeWallpaper
                 m_option.IdType = Option.Type.OneVideo;
             else if (this.radioButton_type_list.Checked)
                 m_option.IdType = Option.Type.Playlist;
+
+            m_option.Shuffle = this.checkBox_shuffle.Checked;
 
             m_option.Id = this.textBox_id.Text;
 
@@ -407,9 +412,6 @@ namespace YoutubeWallpaper
         private void button_apply_Click(object sender, EventArgs e)
         {
             SaveOption();
-
-
-            StopWallpaper();
 
 
             PlayWallpaper();
@@ -550,6 +552,23 @@ namespace YoutubeWallpaper
         private void radioButton_toggleWhenOverlayed_CheckedChanged(object sender, EventArgs e)
         {
             SetOverlayJob(Option.Job.Toggle);
+        }
+
+        //#########################################################################################################
+
+        private void radioButton_type_list_CheckedChanged(object sender, EventArgs e)
+        {
+            this.checkBox_shuffle.Enabled = this.radioButton_type_list.Checked;
+        }
+
+        private void checkBox_shuffle_CheckedChanged(object sender, EventArgs e)
+        {
+            m_option.Shuffle = this.checkBox_shuffle.Checked;
+
+            if (m_wallpaper != null)
+            {
+                PlayWallpaper();
+            }
         }
     }
 }

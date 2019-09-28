@@ -75,16 +75,34 @@
         }
 
         var prevIndex = -1;
+        var shuffleMode = ("SHUFFLE_LIST" === "true");
+        var first = true;
         function onPlayerStateChange(e) {
-            if (playlistId && e.data === YT.PlayerState.ENDED) {
-                var index = player.getPlaylistIndex();
-
-                if (index === prevIndex) {
-                    prevIndex = -1;
-                    player.playVideoAt(0);
+            if (playlistId) {
+                if (e.data === YT.PlayerState.ENDED) {
+                    if (shuffleMode) {
+                        var list = player.getPlaylist();
+                        player.playVideoAt(Math.floor(Math.random() * list.length));
+                    }
+                    else {
+                        var index = player.getPlaylistIndex();
+    
+                        if (index === prevIndex) {
+                            prevIndex = -1;
+                            player.playVideoAt(0);
+                        }
+                        else {
+                            prevIndex = index;
+                        }
+                    }
                 }
-                else {
-                    prevIndex = index;
+                else if (first && e.data === -1) {
+                    first = false;
+
+                    if (shuffleMode) {
+                        var list = player.getPlaylist();
+                        player.playVideoAt(Math.floor(Math.random() * list.length));
+                    }
                 }
             }
         }

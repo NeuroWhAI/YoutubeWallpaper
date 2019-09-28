@@ -47,6 +47,7 @@ namespace YoutubeWallpaper
                 string html = Properties.Resources.Template;
                 html = html.Replace("WALLPAPER_HEIGHT", screen.Height.ToString());
                 html = html.Replace("WALLPAPER_WIDTH", screen.Width.ToString());
+                html = html.Replace("SHUFFLE_LIST", Shuffle ? "true" : "false");
 
                 if (IsPlaylist)
                 {
@@ -101,6 +102,8 @@ namespace YoutubeWallpaper
                 WinApi.waveOutSetVolume(IntPtr.Zero, (vol << 16) | vol);
             }
         }
+
+        public bool Shuffle { get; set; } = false;
 
         private int m_ownerScreenIndex = 0;
         public int OwnerScreenIndex

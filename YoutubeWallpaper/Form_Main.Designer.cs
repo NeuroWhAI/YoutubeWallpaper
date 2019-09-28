@@ -31,6 +31,7 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form_Main));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.checkBox_shuffle = new System.Windows.Forms.CheckBox();
             this.radioButton_type_list = new System.Windows.Forms.RadioButton();
             this.radioButton_type_one = new System.Windows.Forms.RadioButton();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
@@ -75,6 +76,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.checkBox_shuffle);
             this.groupBox1.Controls.Add(this.radioButton_type_list);
             this.groupBox1.Controls.Add(this.radioButton_type_one);
             this.groupBox1.Location = new System.Drawing.Point(11, 41);
@@ -86,6 +88,18 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Type";
             this.toolTip_help.SetToolTip(this.groupBox1, "ID 종류.");
+            // 
+            // checkBox_shuffle
+            // 
+            this.checkBox_shuffle.AutoSize = true;
+            this.checkBox_shuffle.Location = new System.Drawing.Point(190, 24);
+            this.checkBox_shuffle.Name = "checkBox_shuffle";
+            this.checkBox_shuffle.Size = new System.Drawing.Size(83, 19);
+            this.checkBox_shuffle.TabIndex = 2;
+            this.checkBox_shuffle.Text = "Random";
+            this.toolTip_help.SetToolTip(this.checkBox_shuffle, "재생 목록의 영상 순서를 랜덤하게 섞습니다.");
+            this.checkBox_shuffle.UseVisualStyleBackColor = true;
+            this.checkBox_shuffle.CheckedChanged += new System.EventHandler(this.checkBox_shuffle_CheckedChanged);
             // 
             // radioButton_type_list
             // 
@@ -99,6 +113,7 @@
             this.radioButton_type_list.Text = "Playlist";
             this.toolTip_help.SetToolTip(this.radioButton_type_list, "하나 이상의 영상을 가지는 재생목록.");
             this.radioButton_type_list.UseVisualStyleBackColor = true;
+            this.radioButton_type_list.CheckedChanged += new System.EventHandler(this.radioButton_type_list_CheckedChanged);
             // 
             // radioButton_type_one
             // 
@@ -484,6 +499,7 @@
         private System.Windows.Forms.RadioButton radioButton_nothingWhenOverlayed;
         private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem_toggleWallpaper;
         private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem_toggleWallpaperInTray;
+        private System.Windows.Forms.CheckBox checkBox_shuffle;
     }
 }
 
