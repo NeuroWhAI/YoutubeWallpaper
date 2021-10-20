@@ -98,15 +98,15 @@ namespace YoutubeWallpaper
                 }
                 catch (WebException)
                 {
-                    MessageBox.Show("업데이트 확인에 실패하였습니다.\n인터넷 연결을 확인하세요.", "Warning!",
-                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    //MessageBox.Show("업데이트 확인에 실패하였습니다.\n인터넷 연결을 확인하세요.", "Warning!",
+                    //    MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
 #if DEBUG
                     throw;
 #else
-                    MessageBox.Show("알 수 없는 이유로 업데이트 확인에 실패하였습니다.", "Warning!",
+                    MessageBox.Show("알 수 없는 이유로 업데이트 확인에 실패하였습니다.\n" + e.Message, "Warning!",
                         MessageBoxButtons.OK, MessageBoxIcon.Warning);
 #endif
                 }
@@ -396,10 +396,10 @@ namespace YoutubeWallpaper
             StopWallpaper();
 
 
-            RestoreAeroPeek();
-
-
             Cef.Shutdown();
+
+
+            RestoreAeroPeek();
 
 
             this.notifyIcon_tray.Visible = false;

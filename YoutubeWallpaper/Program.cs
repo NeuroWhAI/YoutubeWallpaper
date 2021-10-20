@@ -28,6 +28,8 @@ namespace YoutubeWallpaper
             {
                 MessageBox.Show(exp.Message, "Unhandled Exception", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+
+            System.Diagnostics.Process.GetCurrentProcess().Kill();
         }
     }
 }
