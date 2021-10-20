@@ -98,8 +98,8 @@ namespace YoutubeWallpaper
                 }
                 catch (WebException)
                 {
-                    //MessageBox.Show("업데이트 확인에 실패하였습니다.\n인터넷 연결을 확인하세요.", "Warning!",
-                    //    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show("업데이트 확인에 실패하였습니다.\n인터넷 연결을 확인하세요.", "Warning!",
+                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
                 catch (Exception e)
                 {
